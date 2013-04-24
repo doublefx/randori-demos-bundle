@@ -29,6 +29,10 @@
     -randori-mediator: "mediators.LabsMediator";
 }
 
+.gadgetDetail {
+    -randori-mediator: "mediators.gadget.GadgetDetail";
+}
+
 .targets {
     -randori-mediator: "mediators.TargetsMediator";
 }
@@ -49,6 +53,10 @@
     -randori-behavior: "behaviors.TasksGrid";
 }
 
+.behavior-areachart {
+    -randori-behavior: "behaviors.AreaChart";
+}
+
 .simpleList {
     -randori-behavior: "randori.behaviors.SimpleList";
 }
@@ -59,4 +67,12 @@
 
 .template {
     -randori-behavior: "randori.behaviors.template.TemplateRenderer";
+}
+
+.behavior-base {
+    -randori-behavior: "behaviors.BaseBehavior";
+}
+
+.behavior-image {
+    -randori-behavior: "behaviors.ImageBehavior";
 }

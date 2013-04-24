@@ -30,6 +30,7 @@ package mediators {
 	import randori.behaviors.AbstractMediator;
 	import randori.behaviors.ViewStack;
 
+	import services.vo.Gadget;
 	import services.vo.Target;
 
 	public class IndexMediator extends AbstractMediator {
@@ -76,6 +77,9 @@ package mediators {
 			bus.targetSelected.add( handleTargetSelected );
 			bus.targetClose.add( handleCloseTargetDetail );
 			bus.showTargetLocation.add( handleShowTargetLocation );
+
+            bus.gadgetSelected.add( handleGadgetSelected );
+            bus.gadgetClose.add( handleCloseGadgetDetail );
 		}
 
 		protected function promptLogin():void
@@ -119,6 +123,18 @@ package mediators {
             promise.then( function( result:AbstractMediator ):void {
                 //do something here with the new view if you want
                 result.setViewData( target );
+            } );
+        }
+
+        private function handleCloseGadgetDetail():void {
+            viewStack.popView();
+        }
+
+        private function handleGadgetSelected( gadget:Gadget ):void {
+            var promise:Promise = viewStack.pushView( "views/gadget/gadgetDetail.html");
+            promise.then( function( result:AbstractMediator ):void {
+                //do something here with the new view if you want
+                result.setViewData( gadget );
             } );
         }
 
