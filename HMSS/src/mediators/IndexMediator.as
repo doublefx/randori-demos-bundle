@@ -1,4 +1,4 @@
-/***
+﻿/***
  * Copyright 2013 LTN Consulting, Inc. /dba Digital Primates®
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +30,7 @@ package mediators {
 	import randori.behaviors.AbstractMediator;
 	import randori.behaviors.ViewStack;
 
+	import services.MenuService;
 	import services.vo.Gadget;
 	import services.vo.Target;
 
@@ -50,27 +51,49 @@ package mediators {
 		[Inject]
 		public var appModel:AppModel;
 
+		[Inject]
+		public var menuService:MenuService;
+
         override protected function onRegister():void
 		{
+
+			bus.userChanged.add( currentUser_changeHandler );
+
 			if( appModel.currentUser == null )
 			{
 				promptLogin();
 			}
 			else
 			{
-				initializeMenu();
+				loadUserMenu( appModel.currentUser );
 			}
 		}
 
-		protected function initializeMenu():void
+		protected function loadUserMenu( usr:User ):void
 		{
-			var menuItems:Array = new Array(
-					new MenuItem( "Targets", "views/targets.html" ),
-					new MenuItem( "Labs", "views/labs.html" ),
-					new MenuItem( "Intel", "views/intel.html"  ) ,
-					new MenuItem( "Tasks", "views/tasks.html"  )
-			);
+			if( usr )
+			{
+				var menuPromise:Promise = menuService.get( usr.role );
+				menuPromise.then( menuLoadSuccessfully, menuLoadFailure )
+			}
+			else
+			{
+				throw new ArgumentError("No User Passed In.")
+			}
+		}
 
+		protected function menuLoadSuccessfully( results:Array )
+		{
+			initializeMenu( results );
+		}
+
+		protected function menuLoadFailure( reason:String )
+		{
+
+		}
+
+		protected function initializeMenu( menuItems:Array ):void
+		{
 			menu.menuItemSelected.add( menuItemSelected );
 			menu.data = menuItems;
 
@@ -87,9 +110,6 @@ package mediators {
 			viewStack.pushView( "views/login/login.html");
 
 			bus.loginSuccess.add( handleLoginSuccess );
-			bus.loginSuccess.add( handleLoginFailure );
-
-			// TODO: Add remove
 		}
 
 		protected function handleLoginSuccess( usr:User ):void
@@ -98,12 +118,12 @@ package mediators {
 
 			viewStack.popView();
 
-			initializeMenu();
+			loadUserMenu( appModel.currentUser );
 		}
 
-		protected function handleLoginFailure( reason:String ):void
+		protected function currentUser_changeHandler( usr:User ):void
 		{
-
+			header.showUser( usr );
 		}
 
         private function handleShowTargetLocation( target:Target ):void {

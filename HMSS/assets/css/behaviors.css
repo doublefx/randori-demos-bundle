@@ -8,7 +8,7 @@
     -randori-fragment: "fragment/siteHeader.html";
 }
 
-.mediator-loginArea
+.mediator-login-area
 {
     -randori-mediator: "mediators.login.LoginMediator";
 }
@@ -49,7 +49,16 @@
     -randori-mediator: "mediators.TasksMediator";
 }
 
-.behavior-tasksgrid {
+.tasks-admin {
+    -randori-mediator: "mediators.admin.TasksMediator";
+}
+
+.createTaskForm {
+    -randori-behavior: "behaviors.CreateTaskForm";
+    -randori-fragment: "fragment/createTaskForm.html";
+}
+
+.tasksgrid {
     -randori-behavior: "behaviors.TasksGrid";
 }
 
