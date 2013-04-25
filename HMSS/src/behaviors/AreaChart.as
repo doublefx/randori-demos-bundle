@@ -1,11 +1,11 @@
 package behaviors
 {
+	import d3.scale;
 	import d3.svg;
 	import d3.time;
 
 	import randori.behaviors.AbstractBehavior;
 	import randori.jquery.JQuery;
-	import randori.jquery.JQueryStatic;
 	import randori.webkit.page.Window;
 
 	/**
@@ -56,8 +56,16 @@ package behaviors
 		//----------------------------------------------------------------------------
 
 		private var svg:JQuery;
+		private var graph:JQuery;
+		private var gxAxis:JQuery;
+		private var gyAxis:JQuery;
 
-		private var g:JQuery;
+		private var x:*;
+		private var y:*;
+		private var xAxis:*;
+		private var yAxis:*;
+		private var line:*;
+		private var parseDate:*;
 
 		//----------------------------------------------------------------------------
 		//
@@ -87,7 +95,21 @@ package behaviors
 		 */
 		private function applyDataToChart(data:Array) : void
 		{
+			var scopedParse:* = parseDate;
+			data.forEach(function(d:*):void {
+				d.date = scopedParse(d.date);
+			});
 
+			/*
+				x.domain(d3.extent(data, function(d) { return d.date; }));
+				y.domain(d3.extent(data, function(d) { return d.percentComplete; }));
+
+				svg.append("path")
+						.datum(data)
+						.attr("class", "line")
+						.attr("d", line);
+			});
+			*/
 		}
 
 		/**
@@ -95,82 +117,66 @@ package behaviors
 		 */
 		private function setupChart() : void
 		{
-			JQueryStatic.J("<div></div>");
+			// Setup the graph area
 			var margin:Object = {top: 20, right: 20, bottom: 30, left: 50};
 			var width:Number = 960 - margin.left - margin.right;
 			var height:Number = 500 - margin.top - margin.bottom;
 
 			decoratedNode.append("<svg>");
-			svg = decoratedNode.find("svg");
-			svg.attr("width", width + margin.left + margin.right)
+//			var mysvg:* = d3.select("svg");
+			svg = decoratedNode.find("svg")
+					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
 					.append("<g>");
-			g = svg.find("g");
-			g.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			graph = svg.find("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//			var time:*;
+			// THESE VARIABLE ARE USED TO TRICK THE COMPILER
+			// WHEN THE COMPILER ERROR IS FIXED, REMOVE THESE VARIABLE DECLARATIONS
+			var time:*;
+			var scale:*;
 
-//			var x:* = (new time())//.range([0, width]);
-			var x:* = time.scale().range([0, width]);
+			// build the axes
+			x = d3.time.scale()
+					.range([0, width]);
 
+			y = d3.scale.linear()
+					.range([height, 0]);
 
-//			var y = scale.linear()
-//					.range([height, 0]);
+			xAxis = d3.svg.axis()
+					.scale(x)
+					.orient("bottom");
 
-			var myAxis:* = d3.svg.axis();
+			yAxis = d3.svg.axis()
+					.scale(y)
+					.orient("left");
 
-			/*
-			 var parseDate = d3.time.format("%d-%b-%y").parse;
+			// build the line
+			line = d3.svg.line()
+					.x(function(d:*):* { return x(d.date); })
+					.y(function(d:*):* { return y(d.percentComplete); });
 
-			 var x = d3.time.scale()
-			 .range([0, width]);
+			// setup the date parser
+			parseDate = d3.time.format("%d/%m/%Y").parse;
 
-			 var y = d3.scale.linear()
-			 .range([height, 0]);
+			// setup the area for the axes
+			svg.append("<g id='gx'>");
+			gxAxis = svg.find("#gx")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + height + ")");
+//			gxAxis.call(xAxis);
 
-			 var xAxis = d3.svg.axis()
-			 .scale(x)
-			 .orient("bottom");
-
-			 var yAxis = d3.svg.axis()
-			 .scale(y)
-			 .orient("left");
-
-			 var line = d3.svg.line()
-			 .x(function(d) { return x(d.date); })
-			 .y(function(d) { return y(d.close); });
-
-			 d3.tsv("data.tsv", function(error, data) {
-			 data.forEach(function(d) {
-			 d.date = parseDate(d.date);
-			 d.close = +d.close;
-			 });
-
-			 x.domain(d3.extent(data, function(d) { return d.date; }));
-			 y.domain(d3.extent(data, function(d) { return d.close; }));
-
-			 svg.append("g")
-			 .attr("class", "x axis")
-			 .attr("transform", "translate(0," + height + ")")
-			 .call(xAxis);
-
-			 svg.append("g")
-			 .attr("class", "y axis")
-			 .call(yAxis)
-			 .append("text")
-			 .attr("transform", "rotate(-90)")
-			 .attr("y", 6)
-			 .attr("dy", ".71em")
-			 .style("text-anchor", "end")
-			 .text("Price ($)");
-
-			 svg.append("path")
-			 .datum(data)
-			 .attr("class", "line")
-			 .attr("d", line);
-			 });
-			 */
-
+			svg.append("<g id='gy'>");
+			gyAxis = svg.find("#gy")
+					.attr("class", "y axis")
+//			gyAxis.call(yAxis);
+ 					.append("<text>");
+			var gyText:JQuery = gyAxis.find("text")
+					.attr("transform", "rotate(-90)")
+					.attr("y", 6)
+					.attr("dy", ".71em")
+					.text("Price ($)");
+//			gyText.style("text-anchor", "end");
 		}
 
 		/**

@@ -20,8 +20,10 @@ package d3 {
 	 * @author Jared Schraub <jschraub@digitalprimates.net>
 	 */
 
-	[JavaScript(export="false", name="Window")]
-		public final class time {
+	[JavaScript(export="false",name="d3.time")]
+	public class time {
 		public static function scale():* {return null;}
+
+		public static function format(value:String):* {return null;}
 	}
 }

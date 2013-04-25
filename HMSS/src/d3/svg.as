@@ -19,8 +19,10 @@ package d3 {
 	 * Time: 2:14 PM
 	 * @author Jared Schraub <jschraub@digitalprimates.net>
 	 */
-	[JavaScript(export="false")]
+	[JavaScript(export="false",name="d3.svg")]
 	public class svg {
 		public static function axis():* { return null; }
+
+		public static function line():* { return null; }
 	}
 }

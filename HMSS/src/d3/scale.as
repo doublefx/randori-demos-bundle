@@ -19,7 +19,7 @@ package d3 {
 	 * Time: 2:14 PM
 	 * @author Jared Schraub <jschraub@digitalprimates.net>
 	 */
-	[JavaScript(export="false", name="d3.scale",mode="global")]
+	[JavaScript(export="false",name="d3.scale")]
 	public class scale {
 		public static function linear():* { return null; }
 	}
