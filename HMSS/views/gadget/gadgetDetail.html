@@ -2,13 +2,16 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="assets/css/d3.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/css/gadgetDetails.css" type="text/css"/>
 </head>
 <body class="tab-content gadgetDetail">
 
     <a id="backToList" href="#">Back to List</a>
-        <div id="gadgetName">Name</div>
-        <img id="gadgetDetailImage"/>
-        <div id="gadgetStatus">Status</div>
-        <div id="gadgetProgressChart" class="behavior-areachart"></div>
+        <div id="gadgetName" class="gadgetName">Name</div>
+        <img id="gadgetDetailImage" width="500"/>
+        <div>Status: <span id="gadgetStatus" class="gadgetStatus">Status</span></div>
+        <div class="sectionHeader">Development Progress</div>
+        <div id="gadgetProgressChart" class="behavior-pcareachart gadgetProgress"></div>
 </body>
 </html>

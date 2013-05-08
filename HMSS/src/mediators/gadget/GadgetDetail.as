@@ -1,5 +1,5 @@
 package mediators.gadget {
-	import behaviors.AreaChart;
+	import behaviors.PercentCompleteAreaChart;
 
 	import eventBus.HMSSBus;
 
@@ -39,7 +39,7 @@ package mediators.gadget {
 		public var gadgetStatus:JQuery;
 
 		[View]
-		public var gadgetProgressChart:AreaChart;
+		public var gadgetProgressChart:PercentCompleteAreaChart;
 
 		[View]
 		public var backToList:JQuery;

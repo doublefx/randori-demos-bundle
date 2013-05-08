@@ -17,13 +17,13 @@
  * @author Michael Labriola <labriola@digitalprimates.net>
  */
 package services {
-import randori.async.Promise;
-import randori.service.AbstractService;
-import randori.webkit.xml.XMLHttpRequest;
+	import randori.async.Promise;
+	import randori.service.AbstractService;
+	import randori.webkit.xml.XMLHttpRequest;
 
-import services.parser.GenericJsonParser;
+	import services.parser.GenericJsonParser;
 
-public class LabService extends AbstractService {
+	public class LabService extends AbstractService {
 		
 		private var gadgets:GenericJsonParser;
 		
@@ -40,7 +40,7 @@ public class LabService extends AbstractService {
 			super(xmlHttpRequest);
 			
 			this.gadgets = gadgets;
-			this.path = "assets/data/gadgets.txt";
+			this.path = "assets/data/gadgets.json";
 		}
 	}
 }

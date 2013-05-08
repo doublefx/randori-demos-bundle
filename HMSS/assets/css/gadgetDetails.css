@@ -1,0 +1,20 @@
+.gadgetName {
+    font-weight: bold;
+    font-size: 2em;
+    margin: 16px 0;
+}
+
+.gadgetStatus {
+    font-style: italic;
+}
+
+.sectionHeader {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 8px 0 0 0;
+}
+
+.gadgetProgress {
+    width: 500;
+    height: 300;
+}

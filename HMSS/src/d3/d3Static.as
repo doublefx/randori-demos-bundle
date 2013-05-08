@@ -1,4 +1,5 @@
 package d3 {
+
 	/***
 	 * Copyright 2013 LTN Consulting, Inc. /dba Digital Primates®
 	 *
@@ -15,16 +16,13 @@ package d3 {
 	 * limitations under the License.
 	 *
 	 * Created with IntelliJ IDEA.
-	 * Date: 4/24/13
-	 * Time: 2:14 PM
+	 * Date: 5/7/13
+	 * Time: 11:40 AM
 	 * @author Jared Schraub <jschraub@digitalprimates.net>
 	 */
-	[JavaScript(export="false",name="d3.svg")]
-	public class svg {
-		public static function axis():* { return null; }
-
-		public static function line():* { return null; }
-
-		public static function area():* { return null; }
+	[JavaScript(export="false",name="d3")]
+	public class d3Static {
+		public static function select(value:*):* {return null;}
+		public static function extent(data:Array, func:Function):* {return null;}
 	}
 }

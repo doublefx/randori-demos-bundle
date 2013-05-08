@@ -43,7 +43,7 @@ package services {
 			
 			this.config = config;
 			this.targets = targets;
-			this.path = "assets/data/targets.txt";
+			this.path = "assets/data/targets.json";
 		}
 	}
 }

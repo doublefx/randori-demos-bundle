@@ -62,8 +62,8 @@
     -randori-behavior: "behaviors.TasksGrid";
 }
 
-.behavior-areachart {
-    -randori-behavior: "behaviors.AreaChart";
+.behavior-pcareachart {
+    -randori-behavior: "behaviors.PercentCompleteAreaChart";
 }
 
 .simpleList {
