@@ -22,7 +22,7 @@ package d3 {
 	 */
 	[JavaScript(export="false",name="d3")]
 	public class d3Static {
-		public static function select(value:*):* {return null;}
-		public static function extent(data:Array, func:Function):* {return null;}
+		public static function select(value:*):D3Selection {return null;}
+		public static function extent(data:Array, func:Function):D3Selection {return null;}
 	}
 }

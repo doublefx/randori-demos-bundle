@@ -21,10 +21,8 @@ package d3 {
 	 */
 	[JavaScript(export="false",name="d3.svg")]
 	public class svg {
-		public static function axis():* { return null; }
-
-		public static function line():* { return null; }
-
-		public static function area():* { return null; }
+		public static function axis():D3Axis { return null; }
+		public static function line():D3Line { return null; }
+		public static function area():D3Area { return null; }
 	}
 }

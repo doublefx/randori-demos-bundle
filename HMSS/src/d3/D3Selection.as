@@ -1,4 +1,5 @@
 package d3 {
+
 	/***
 	 * Copyright 2013 LTN Consulting, Inc. /dba Digital Primates®
 	 *
@@ -15,12 +16,22 @@ package d3 {
 	 * limitations under the License.
 	 *
 	 * Created with IntelliJ IDEA.
-	 * Date: 4/24/13
-	 * Time: 2:14 PM
+	 * Date: 5/13/13
+	 * Time: 10:31 AM
 	 * @author Jared Schraub <jschraub@digitalprimates.net>
 	 */
-	[JavaScript(export="false",name="d3.scale")]
-	public class scale {
-		public static function linear():D3Scale { return null; }
+	[JavaScript(export="false")]
+	public class D3Selection {
+		public function append(value:String):D3Selection {return null;}
+		public function attr(name:String, value:*):D3Selection {return null;}
+		public function style(name:String, value:*):D3Selection {return null;}
+		public function call(value:*):D3Selection {return null;}
+		public function text(value:String):D3Selection {return null;}
+		public function datum(data:Array):D3Selection {return null;}
+		public function select(value:String):D3Selection {return null;}
+		public function selectAll(value:String):D3Selection {return null;}
+		public function remove():D3Selection {return null;}
+
+		public function D3Selection() { }
 	}
 }

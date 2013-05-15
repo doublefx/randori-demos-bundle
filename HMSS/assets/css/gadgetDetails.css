@@ -15,6 +15,12 @@
 }
 
 .gadgetProgress {
-    width: 500;
-    height: 300;
+    width: 400px;
+    height: 250px;
+}
+
+svg {
+    width: 400px;
+    height: 250px;
+    /*overflow: visible;*/
 }

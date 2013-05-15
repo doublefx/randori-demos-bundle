@@ -22,8 +22,7 @@ package d3 {
 
 	[JavaScript(export="false",name="d3.time")]
 	public class time {
-		public static function scale():* {return null;}
-
+		public static function scale():D3Scale {return null;}
 		public static function format(value:String):* {return null;}
 	}
 }

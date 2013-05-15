@@ -1,4 +1,5 @@
 package d3 {
+
 	/***
 	 * Copyright 2013 LTN Consulting, Inc. /dba Digital Primates®
 	 *
@@ -15,12 +16,15 @@ package d3 {
 	 * limitations under the License.
 	 *
 	 * Created with IntelliJ IDEA.
-	 * Date: 4/24/13
-	 * Time: 2:14 PM
+	 * Date: 5/13/13
+	 * Time: 10:44 AM
 	 * @author Jared Schraub <jschraub@digitalprimates.net>
 	 */
-	[JavaScript(export="false",name="d3.scale")]
-	public class scale {
-		public static function linear():D3Scale { return null; }
+	[JavaScript(export="false")]
+	public class D3Axis {
+		public function scale(scale:D3Scale):D3Axis {return null;}
+		public function orient(value:String):D3Axis {return null;}
+
+		public function D3Axis() { }
 	}
 }
