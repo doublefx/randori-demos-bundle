@@ -22,7 +22,7 @@ ul.imageRow li img {
     padding:0px;
 }
 
-div.filmstrip {
+.gadgetsFilmstrip {
     overflow-x: scroll;
     overflow-y: hidden;
     width: 480px;
@@ -44,8 +44,16 @@ ul.imageRow li:hover {
     vertical-align: top;
 }
 
+.sectionHeader {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 8px 0 0 0;
+}
+
 .gadgetName {
     font-weight: bold;
+    font-size: 2em;
+    margin: 16px 0;
 }
 
 .gadgetStatus {
@@ -54,4 +62,20 @@ ul.imageRow li:hover {
 
 .gadgetDescription {
     padding-top: 8px;
+}
+
+.gadgetProgress {
+    width: 500px;
+    height: 300px;
+}
+
+svg {
+    width: 500px;
+    height: 300px;
+    padding: 8px;
+    /*overflow: visible;*/
+}
+
+.arclabel {
+    font-size: .7em;
 }

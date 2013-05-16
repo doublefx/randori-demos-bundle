@@ -35,6 +35,12 @@ package eventBus {
 		public var showAllTargetLocations:SimpleSignal;
 
 		[Inject]
+		public var gadgetSelected:SimpleSignal;
+
+		[Inject]
+		public var gadgetClose:SimpleSignal;
+
+		[Inject]
 		public var userChanged:SimpleSignal;
 
 		[Inject]

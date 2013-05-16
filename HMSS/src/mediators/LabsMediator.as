@@ -31,13 +31,12 @@ package mediators {
 		[Inject]
 		public var labService:LabService
 
-		override protected function onRegister():void {
-			labService.get().then( displayInList );
-		}
-
 		private function displayInList( data:Array ):void {
 			gadgets.data = data;
+		}
 
+		override protected function onRegister():void {
+			labService.get().then( displayInList );
 		}
 
 		public function LabsMediator() {

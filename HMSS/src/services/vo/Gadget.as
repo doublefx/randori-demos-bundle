@@ -23,6 +23,11 @@ package services.vo {
 		public var image:String;
 		public var status:String;
 		public var description:String;
+		public var failLabUses:Number;
+		public var failFieldUses:Number;
+		public var succLabUses:Number;
+		public var succFieldUses:Number;
+		public var progressPercents:Array;
 
 		public function Gadget() {
 		}

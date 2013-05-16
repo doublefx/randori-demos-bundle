@@ -40,7 +40,7 @@ package services {
 			super(xmlHttpRequest);
 			
 			this.gadgets = gadgets;
-			this.path = "assets/data/gadgets.txt";
+			this.path = "assets/data/gadgets.json";
 		}
 	}
 }

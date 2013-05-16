@@ -1,6 +1,5 @@
 package behaviors {
 	import randori.behaviors.AbstractBehavior;
-	import randori.jquery.Event;
 	import randori.jquery.JQuery;
 
 	import services.vo.Gadget;
@@ -40,13 +39,17 @@ package behaviors {
 		[View]
 		public var mainSlide:JQuery;
 		[View]
-		public var imageRow:JQuery;
-		[View]
 		public var gadgetName:JQuery;
 		[View]
 		public var gadgetStatus:JQuery;
 		[View]
 		public var gadgetDescription:JQuery;
+		[View]
+		public var gadgetSelector:Filmstrip;
+		[View]
+		public var gadgetProgressChart:DateAreaChart;
+		[View]
+		public var gadgetUsesChart:PieChart;
 
 		public var activeGadget:Gadget;
 
@@ -73,33 +76,10 @@ package behaviors {
 
 			_data = value;
 
-			// remove the list items that already exist
-			imageRow.remove("li");
-
-			// add each new list item
-			var item:JQuery
-			var totalWidth:Number = 0;
-			for (var i:int = 0; i < _data.length; i++) {
-				// create the item
-				imageRow.append("<li id='gadget" + i + "'><img src='" + _data[i].image + "'/></li>");
-				// add a click listener to the item
-				item = imageRow.find("#gadget" + i);
-				item.click(_data[i], gadgetClicked);
-
-				// total the width of the items
-				totalWidth += item.outerWidth(true);
-			}
-			// set the width of the imageRow to the total width of the items
-			imageRow.width(totalWidth);
+			gadgetSelector.data = value;
 
 			// set the active item to the first item in the list
 			setActive(_data[0]);
-		}
-
-		public function gadgetClicked(event:Event):void {
-			if (event == null)
-				return;
-			setActive(event.data as Gadget);
 		}
 
 		public function setActive(gadget:Gadget):void {
@@ -112,10 +92,26 @@ package behaviors {
 			gadgetName.html(gadget.name);
 			gadgetStatus.html(gadget.status);
 			gadgetDescription.html(gadget.description);
+			gadgetProgressChart.data = gadget.progressPercents;
+			gadgetUsesChart.data = [{name:"Lab Fails", value:gadget.failLabUses},
+									{name:"Field Fails", value:gadget.failFieldUses},
+									{name:"Lab Successes", value:gadget.succLabUses},
+									{name:"Field Successes", value:gadget.succFieldUses}];
+		}
+
+		private function handleGadgetSelected( gadget:Gadget ):void {
+			setActive(gadget);
+//			var promise:Promise = viewStack.pushView( "views/gadget/gadgetDetail.html");
+//			promise.then( function( result:AbstractMediator ):void {
+//				//do something here with the new view if you want
+//				result.setViewData( gadget );
+//			} );
 		}
 
 		override protected function onRegister():void {
+			gadgetProgressChart.setYAxisText("Percent Complete");
 
+			gadgetSelector.registerItemSelect(handleGadgetSelected);
 		}
 
 		override protected function onDeregister():void {

@@ -1,0 +1,398 @@
+[
+    {
+        "name": "Spike Umbrella",
+        "image": "assets/images/gadgets/bond-gadgets-01-1012-lgn.jpg",
+        "status": "Deployed",
+        "description": "It's a spiked umbrella.",
+        "failLabUses": 5,
+        "failFieldUses": 1,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1980",
+                "value": 0
+            },
+            {
+                "date": "24/07/1980",
+                "value": 6
+            },
+            {
+                "date": "24/08/1980",
+                "value": 12
+            },
+            {
+                "date": "24/10/1980",
+                "value": 18
+            },
+            {
+                "date": "24/11/1980",
+                "value": 24
+            },
+            {
+                "date": "24/12/1980",
+                "value": 30
+            },
+            {
+                "date": "24/01/1981",
+                "value": 50
+            },
+            {
+                "date": "24/06/1981",
+                "value": 100
+            }
+        ]
+    },
+    {
+        "name": "Bagpipe Flamethrower",
+        "image": "assets/images/gadgets/bond-gadgets-02-1012-lgn.jpg",
+        "status": "Deployed",
+        "description": "A bagpipe that contains a flamethrower and a machine gun.",
+        "failLabUses": 3,
+        "failFieldUses": 6,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1996",
+                "value": 0
+            },
+            {
+                "date": "26/12/1996",
+                "value": 2
+            },
+            {
+                "date": "12/3/1997",
+                "value": 10
+            },
+            {
+                "date": "15/10/1997",
+                "value": 30
+            },
+            {
+                "date": "26/11/1998",
+                "value": 70
+            },
+            {
+                "date": "26/11/1999",
+                "value": 100
+            }
+        ]
+    },
+    {
+        "name": "False Fingerprints",
+        "image": "assets/images/gadgets/bond-gadgets-03-1012-lgn.jpg",
+        "status": "Deployed",
+        "description": "A fake fingerprint the clings to the finger tip.",
+        "failLabUses": 42,
+        "failFieldUses": 67,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1967",
+                "value": 0
+            },
+            {
+            "date": "30/12/1971",
+            "value": 100
+            }
+        ]
+    },
+    {
+        "name": "Combination Safecracker-Copying Machine",
+        "image": "assets/images/gadgets/bond-gadgets-04-1012-lgn.jpg",
+        "status": "Deprecated",
+        "description": "A device that consists of a flexible cable ending in a grapple that is meant to be fitted on a typical safe combination lock. The machine would then examine the lock, figure out its combination and open the safe. In addition, the device sports an Olivetti wet-type photocopier that could allow for easy copying of secret documents to minimise the chance of the owner learning of the break in by missing documents. Wet-type photocopiers are actually unsuitable for field missions because they must not be tilted lest the highly toxic transfer liquid spills out. This device is quite slow, taking close to an hour to open a safe.",
+        "failLabUses": 15,
+        "failFieldUses": 2,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1967",
+                "value": 0
+            },
+            {
+                "date": "01/01/1968",
+                "value": 95
+            },
+            {
+                "date": "18/12/1969",
+                "value": 100
+            }
+        ]
+    },
+    {
+        "name": "Shark-Inflating Pellet",
+        "image": "assets/images/gadgets/bond-gadgets-05-1012-lgn.jpg",
+        "status": "Deployed",
+        "description": "The name describes it well enough.",
+        "failLabUses": 3,
+        "failFieldUses": 1,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1973",
+                "value": 0
+            },
+            {
+                "date": "30/06/1973",
+                "value": 62
+            },
+            {
+                "date": "06/07/1973",
+                "value": 100
+            }
+        ]
+    },
+    {
+        "name": "Cigarette and Toothpaste Bomb",
+        "image": "assets/images/gadgets/bond-gadgets-06-1012-lgn.jpg",
+        "status": "Deployed",
+        "description": "Plastic explosives disguised as ordinary toothpaste. The receiver that picks up the signal from Bond to blow the explosives is disguised as a packet of cigarettes.",
+        "failLabUses": 11,
+        "failFieldUses": 17,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1980",
+                "value": 25
+            },
+            {
+                "date": "24/06/1981",
+                "value": 35
+            },
+            {
+                "date": "24/06/1984",
+                "value": 47
+            },
+            {
+                "date": "24/06/1987",
+                "value": 68
+            },
+            {
+                "date": "13/06/1989",
+                "value": 100
+            }
+        ]
+    },
+    {
+        "name": "Multitouch Table",
+        "image": "assets/images/gadgets/bond-gadgets-07-1012-lgn.jpg",
+        "status": "Scheduled",
+        "description": "Similar to the Microsoft Surface (renamed to Microsoft PixelSense), this tool used by MI6 gathers information regarding possible suspects in an investigation, and relays it back to Bond through his mobile phone.",
+        "failLabUses": 135,
+        "failFieldUses": 207,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1971",
+                "value": 5
+            },
+            {
+                "date": "24/07/1972",
+                "value": 7
+            },
+            {
+                "date": "24/12/1973",
+                "value": 9
+            },
+            {
+                "date": "24/11/1974",
+                "value": 9
+            },
+            {
+                "date": "24/05/1977",
+                "value": 10
+            },
+            {
+                "date": "24/01/1981",
+                "value": 14
+            },
+            {
+                "date": "24/09/1985",
+                "value": 17
+            },
+            {
+                "date": "24/07/1999",
+                "value": 34
+            },
+            {
+                "date": "24/03/2001",
+                "value": 59
+            },
+            {
+                "date": "24/02/2002",
+                "value": 77
+            },
+            {
+                "date": "24/09/2002",
+                "value": 90
+            },
+            {
+                "date": "24/06/2003",
+                "value": 92
+            },
+            {
+                "date": "29/10/2008",
+                "value": 100
+            }
+        ]
+    },
+    {
+        "name": "Wallis WA-116 Agile",
+        "image": "assets/images/gadgets/bond-gadgets-08-1012-lgn.jpg",
+        "status": "Deployed",
+        "description": "Wallis WA-116 Series 1 gyroplane (codename Little Nellie). Aircraft that can be assembled and disassembled to fit into several small cases. Comes with rocket launchers, air mines, machine guns, rear-mounted flamethrowers, and infrared-guided AA smart missiles.",
+        "failLabUses": 12,
+        "failFieldUses": 6,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1966",
+                "value": 0
+            },
+            {
+                "date": "21/09/1966",
+                "value": 24
+            },
+            {
+                "date": "14/12/1966",
+                "value": 76
+            },
+            {
+                "date": "12/06/1967",
+                "value": 100
+            }
+        ]
+    },
+    {
+        "name": "Car Invisibility Cloak",
+        "image": "assets/images/gadgets/bond-gadgets-09-1012-lgn.jpg",
+        "status": "In Development",
+        "description": "Aston Martin Vanquish. A high-tech car that uses adaptive camouflage technology, and so is equipped with tiny cameras on both sides so that they reflect what they capture on the other side, making it invisible to the human eye. Other features consist of the following: bonnet-mounted target-seeking shotguns, front-firing torpedoes, traction spikes, a passenger ejector seat, dual machine guns concealed behind the front grille, a retractable sliding roof panel, radial thermal imaging (heat) display, a remote-control function, some sort of laser cutting tool (accessible via its respective button on the control panel) and grenades of some sort, presumably rearward ones (also present on the control panel).  Overall, just a really sweet car and arguably the best Aston Martin product created by HMSS ever.",
+        "failLabUses": 2,
+        "failFieldUses": 1,
+        "succLabUses": 5,
+        "succFieldUses": 1,
+        "progressPercents": [
+            {
+                "date": "24/06/1977",
+                "value": 0
+            },
+            {
+                "date": "11/07/1977",
+                "value": 20
+            },
+            {
+                "date": "24/01/1981",
+                "value": 22
+            },
+            {
+                "date": "24/09/1985",
+                "value": 52
+            },
+            {
+                "date": "24/07/1987",
+                "value": 60
+            },
+            {
+                "date": "24/03/1989",
+                "value": 60
+            },
+            {
+                "date": "24/02/1990",
+                "value": 60
+            },
+            {
+                "date": "24/09/1990",
+                "value": 65
+            },
+            {
+                "date": "25/10/1991",
+                "value": 67
+            },
+            {
+                "date": "26/11/1992",
+                "value": 79
+            },
+            {
+                "date": "27/09/1993",
+                "value": 79
+            },
+            {
+                "date": "28/10/1993",
+                "value": 80
+            },
+            {
+                "date": "29/10/1994",
+                "value": 81
+            },
+            {
+                "date": "30/06/1995",
+                "value": 82
+            },
+            {
+                "date": "01/10/1995",
+                "value": 83
+            },
+            {
+                "date": "15/10/1996",
+                "value": 84
+            },
+            {
+                "date": "16/11/1996",
+                "value": 90
+            },
+            {
+                "date": "17/08/1997",
+                "value": 92
+            },
+            {
+                "date": "18/12/1997",
+                "value": 94
+            },
+            {
+                "date": "19/04/1998",
+                "value": 94
+            },
+            {
+                "date": "21/08/1998",
+                "value": 95
+            },
+            {
+                "date": "23/10/1999",
+                "value": 95
+            },
+            {
+                "date": "20/11/2002",
+                "value": 96
+            }
+        ]
+    },
+    {
+        "name": "Ring Camera",
+        "image": "assets/images/gadgets/bond-gadgets-10-1012-lgn.jpg",
+        "status": "In Development",
+        "description": "A ring that contains a miniature camera.",
+        "failLabUses": 6,
+        "failFieldUses": 1,
+        "succLabUses": 2,
+        "succFieldUses": 0,
+        "progressPercents": [
+            {
+                "date": "24/06/1980",
+                "value": 0
+            },
+            {
+                "date": "12/06/1985",
+                "value": 50
+            }
+        ]
+    }
+]

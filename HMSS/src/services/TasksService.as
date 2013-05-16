@@ -86,7 +86,7 @@ package services
 			super(xmlHttpRequest);
 
 			this.parser = parser;
-			this.path = "assets/data/tasks.txt";
+			this.path = "assets/data/tasks.json";
 		}
 	}
 }

@@ -31,6 +31,10 @@
     -randori-fragment: "fragment/gadgetsSlideshowFragment.html";
 }
 
+.gadgetDetail {
+    -randori-mediator: "mediators.gadget.GadgetDetail";
+}
+
 .targets {
     -randori-mediator: "mediators.TargetsMediator";
 }
@@ -64,6 +68,18 @@
     -randori-behavior: "behaviors.GadgetSlideShow";
 }
 
+.behavior-filmstrip {
+    -randori-behavior: "behaviors.Filmstrip";
+}
+	
+.behavior-dateareachart {
+    -randori-behavior: "behaviors.DateAreaChart";
+}
+
+.behavior-piechart {
+    -randori-behavior: "behaviors.PieChart";
+}
+
 .simpleList {
     -randori-behavior: "randori.behaviors.SimpleList";
 }
@@ -74,4 +90,12 @@
 
 .template {
     -randori-behavior: "randori.behaviors.template.TemplateRenderer";
+}
+
+.behavior-base {
+    -randori-behavior: "behaviors.BaseBehavior";
+}
+
+.behavior-image {
+    -randori-behavior: "behaviors.ImageBehavior";
 }
