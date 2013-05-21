@@ -37,20 +37,20 @@ package behaviors {
 		//----------------------------------------
 
 		[View]
-		public var mainSlide:JQuery;
-		[View]
-		public var gadgetName:JQuery;
-		[View]
-		public var gadgetStatus:JQuery;
-		[View]
-		public var gadgetDescription:JQuery;
-		[View]
 		public var gadgetSelector:Filmstrip;
-		[View]
+		[View(required="false")]
+		public var mainSlide:JQuery;
+		[View(required="false")]
+		public var gadgetName:JQuery;
+		[View(required="false")]
+		public var gadgetStatus:JQuery;
+		[View(required="false")]
+		public var gadgetDescription:JQuery;
+		[View(required="false")]
 		public var gadgetProgressChart:DateAreaChart;
-		[View]
+		[View(required="false")]
 		public var gadgetUsesChart:PieChart;
-		[View]
+		[View(required="false")]
 		public var gadgetUsesCompareChart:GroupedBarChart;
 
 		public var activeGadget:Gadget;
@@ -78,7 +78,8 @@ package behaviors {
 
 			_data = value;
 
-			gadgetSelector.data = value;
+			if (gadgetSelector)
+				gadgetSelector.data = value;
 
 			// set the active item to the first item in the list
 			setActive(_data[0]);
@@ -87,17 +88,19 @@ package behaviors {
 		}
 
 		public function dataToCharts(data:Array):void {
-			var uses:Array = new Array();
-			data.forEach(function (gadget:Gadget):void {
-				uses.push({name: gadget.name,
-							"Lab Fails": gadget.failLabUses,
-							"Field Fails": gadget.failFieldUses,
-							"Lab Successes": gadget.succLabUses,
-							"Field Successes": gadget.succFieldUses})
-			});
-			gadgetUsesCompareChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
-			gadgetUsesCompareChart.data = uses;
-			gadgetUsesCompareChart.setYAxisText("Gadget Uses");
+			if (gadgetUsesCompareChart) {
+				var uses:Array = new Array();
+				data.forEach(function (gadget:Gadget):void {
+					uses.push({name: gadget.name,
+								"Lab Fails": gadget.failLabUses,
+								"Field Fails": gadget.failFieldUses,
+								"Lab Successes": gadget.succLabUses,
+								"Field Successes": gadget.succFieldUses})
+				});
+				gadgetUsesCompareChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
+				gadgetUsesCompareChart.data = uses;
+				gadgetUsesCompareChart.setYAxisText("Gadget Uses");
+			}
 		}
 
 		public function setActive(gadget:Gadget):void {
@@ -106,17 +109,25 @@ package behaviors {
 			// set the active gadget
 			activeGadget = gadget;
 			// set the displays of the active gadget
-			mainSlide.attr("src", gadget.image);
-			gadgetName.html(gadget.name);
-			gadgetStatus.html(gadget.status);
-			gadgetDescription.html(gadget.description);
-			gadgetProgressChart.data = gadget.progressPercents;
-			gadgetProgressChart.setYAxisText("Percent Complete");
-			gadgetUsesChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
-			gadgetUsesChart.data = [{name:"Lab Fails", value:gadget.failLabUses},
-									{name:"Field Fails", value:gadget.failFieldUses},
-									{name:"Lab Successes", value:gadget.succLabUses},
-									{name:"Field Successes", value:gadget.succFieldUses}];
+			if (mainSlide)
+				mainSlide.attr("src", gadget.image);
+			if (gadgetName)
+				gadgetName.html(gadget.name);
+			if (gadgetStatus)
+				gadgetStatus.html(gadget.status);
+			if (gadgetDescription)
+				gadgetDescription.html(gadget.description);
+			if (gadgetProgressChart) {
+				gadgetProgressChart.data = gadget.progressPercents;
+				gadgetProgressChart.setYAxisText("Percent Complete");
+			}
+			if (gadgetUsesChart) {
+				gadgetUsesChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
+				gadgetUsesChart.data = [{name:"Lab Fails", value:gadget.failLabUses},
+										{name:"Field Fails", value:gadget.failFieldUses},
+										{name:"Lab Successes", value:gadget.succLabUses},
+										{name:"Field Successes", value:gadget.succFieldUses}];
+			}
 		}
 
 		private function handleGadgetSelected( gadget:Gadget ):void {
