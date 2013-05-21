@@ -1,19 +1,30 @@
+<script type="text/javascript" src="generated/utils/CircleMath.js"></script>
 <div id="gadgets" class="gadgetslideshow">
-<table class="mainTable">
-    <tr>
-        <td>
-            <img id="mainSlide" class="mainSlideWindow"/>
-            <div id="gadgetSelector" class="behavior-filmstrip gadgetsFilmstrip">
-                <ul id="imageRow" class="imageRow"></ul>
-            </div>
-            <div id="gadgetProgressChart" class="behavior-dateareachart gadgetProgress"></div>
-            <div id="gadgetUsesChart" class="behavior-piechart gadgetUses"></div>
-        </td>
-        <td id="activeGadgetArea">
-            <div id="gadgetName" class="gadgetName"></div>
-            <div id="gadgetStatus" class="gadgetStatus"></div>
-            <div id="gadgetDescription" class="gadgetDescription"></div>
-        </td>
-    </tr>
-</table>
+    <table class="mainTable">
+        <tr>
+            <td>
+                <div id="gadgetSelector" class="behavior-filmstrip gadgetsFilmstrip">
+                    <ul id="imageRow" class="imageRow"></ul>
+                </div>
+                <img id="mainSlide" class="mainSlideWindow"/>
+                <div class="sectionHeader">Gadget Comparisons</div>
+                <div id="gadgetUsesCompareChart" class="behavior-groupedbarchart gadgetUsesCompare">
+                    <svg id="groupedbarchartsvg"></svg>
+                </div>
+            </td>
+            <td>
+                <div id="gadgetName" class="gadgetName"></div>
+                <div id="gadgetStatus" class="gadgetStatus"></div>
+                <div id="gadgetDescription" class="gadgetDescription"></div>
+                <div class="sectionHeader">Development Progress</div>
+                <div id="gadgetProgressChart" class="behavior-dateareachart gadgetProgress">
+                    <svg id="areachartsvg"></svg>
+                </div>
+                <div class="sectionHeader">Usage Results</div>
+                <div id="gadgetUsesChart" class="behavior-piechart gadgetUses">
+                    <svg id="piechartsvg"></svg>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>

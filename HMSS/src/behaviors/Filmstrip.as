@@ -81,7 +81,7 @@ package behaviors {
 		public function itemClicked(event:Event):void {
 			if (event == null)
 				return;
-			itemSelectedHandlers.forEach(function (f:Function) {
+			itemSelectedHandlers.forEach(function (f:Function):void {
 				f(event.data);
 			});
 //			setActive(event.data);
@@ -98,6 +98,5 @@ package behaviors {
 		override protected function onDeregister():void {
 
 		}
-
 	}
 }

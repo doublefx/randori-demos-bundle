@@ -6,8 +6,12 @@ package behaviors {
 	import d3.d3Static;
 	import d3.layout;
 	import d3.scale;
+	import d3.svg;
 
 	import randori.behaviors.AbstractBehavior;
+	import randori.jquery.JQuery;
+
+	import utils.CircleMath;
 
 	/***
 	 * Copyright 2013 LTN Consulting, Inc. /dba Digital Primates®
@@ -29,8 +33,7 @@ package behaviors {
 	 * Time: 3:33 PM
 	 * @author Jared Schraub <jschraub@digitalprimates.net>
 	 */
-	public class PieChart extends AbstractBehavior
-	{
+	public class PieChart extends AbstractBehavior {
 		//----------------------------------------------------------------------------
 		//
 		// Properties
@@ -49,21 +52,17 @@ package behaviors {
 		/**
 		 * the grid updates when data is written to this property
 		 */
-		public function get data() : Array
-		{
+		public function get data() : Array {
 			return _data;
 		}
 
 		/**
 		 * @private
 		 */
-		public function set data(value:Array) : void
-		{
+		public function set data(value:Array) : void {
 			if (_data == value)
 				return;
-
 			_data = value;
-
 			applyDataToChart(_data);
 		}
 
@@ -73,18 +72,23 @@ package behaviors {
 		//
 		//----------------------------------------------------------------------------
 
-		private var svg:D3Selection;
+		[View]
+		public var piechartsvg:JQuery;
+		private var svgDOM:D3Selection;
 
 		private var width:Number;
 		private var height:Number;
-		private var radius:Number;
+		private var radius:Number = -1;
 
-		private var color:D3Scale;
-		private var arc:D3Arc;
-		private var pie:D3Pie;
-		private var g:D3Selection;
-		private var gpath:D3Selection;
-		private var gtext:D3Selection;
+		private var colorScale:D3Scale;
+		private var d3Arc:D3Arc;
+		private var d3Pie:D3Pie;
+		private var arcDOM:D3Selection;
+		private var gpathDOM:D3Selection;
+		private var gtextDOM:D3Selection;
+		private var innerLabel:D3Selection;
+
+		private var colors:Array = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
 
 		//----------------------------------------------------------------------------
 		//
@@ -92,73 +96,158 @@ package behaviors {
 		//
 		//----------------------------------------------------------------------------
 
+		private function setupInnerLabel(data:Array):void {
+			if (innerLabel == null) {
+				innerLabel = svgDOM.append("text")
+						.attr("class", "innerLabel")
+						.style("text-anchor", "middle")
+			}
+			var total:Number = 0;
+			data.forEach(function(d:*):void {
+				total += d.value;
+			});
+			innerLabel.text("Total: " + total);
+		}
+
+		/**
+		 * setup the text tag (the pie slice text label)
+		 */
+		private function setupGTextDOM():void {
+			var scopedArc:* = d3Arc;
+//			var scopedRadius:Number = radius;
+			gtextDOM = arcDOM.append("text")
+					.attr("class", "arcLabel")
+					.attr("transform", function(d:Object):String { return "translate(" + scopedArc.centroid(d) + ")"; })
+//					.attr("transform", function (d:*):String {
+//						var c:Array = scopedArc.centroid(d);
+//						var x:Number = c[0];
+//						var y:Number = c[1];
+////						var adjustedRadius:Number = scopedRadius + 4; // so that the text isn't right up against the pie slice
+//						// pythagorean theorem for hypotenuse
+//						var h:Number = CircleMath.calcHypotenuse(x, y);
+////						var yAdjust:Number = CircleMath.angleAboveCenter(d.endAngle, d.startAngle) ? d.height : 0; // adjust for the height of the text
+//						return "translate(" + CircleMath.calcComponentOfOuterCircle(x, h, scopedRadius) + ',' +
+//								CircleMath.calcComponentOfOuterCircle(y, h, scopedRadius) + ")";
+//					})
+					.attr("dy", ".35em")
+					.style("text-anchor", "middle")
+//					.style("text-anchor", function (d:*):String {
+//						// make sure that the center is not past
+//						if (CircleMath.angleLeftOfCenter(d.endAngle, d.startAngle))
+//							return "end";
+//						else
+//							return "start";
+//					})
+					.text(function (d:Object):String {
+//						return d.data.name + " (" + d.data.value + ")";
+						return d.data.value;
+					});
+		}
+
+		/**
+		 * setup the path DOM object for each arc object.
+		 */
+		private function setupGPathDOM():void {
+			var scopedColor:* = colorScale;
+			gpathDOM = arcDOM.append("path")
+					.attr("d", d3Arc)
+					.style("fill", function (d:Object):* {
+						return scopedColor(d.data.name);
+					});
+		}
+
+		/**
+		 * setup the arc areas to the DOM based on the data array
+		 *
+		 * @param data the data array that holds the values to be displayed by the pie chart
+		 */
+		private function setupArcDOM(data:Array):void {
+			var scopedPie:* = d3Pie;
+			svgDOM.selectAll(".arc").remove();
+			arcDOM = svgDOM.selectAll(".arc")
+					.data(scopedPie(data)).enter()
+					.append("g")
+					.attr("class", "arc");
+		}
+
+		/**
+		 * setup the svg DOM object
+		 */
+		private function setupSVGDOM():void {
+			if (svgDOM == null) {
+				svgDOM = d3Static.select(piechartsvg[0])
+						.append("g")
+						.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			}
+		}
+
+		/**
+		 * setup the d3 pie object
+		 */
+		private function setupD3Pie():void {
+			if (d3Pie == null) {
+				d3Pie = layout.pie()
+						.sort(null)
+						.value(function (d:*):* {
+							return d.value;
+						});
+			}
+		}
+
+		/**
+		 * calculate the radius based on the width and height of the svg area
+		 */
+		private function setupRadius():void {
+			if (radius == -1) { // if the radius hasn't been set yet
+				width = piechartsvg.width();
+				height = piechartsvg.height();
+				radius = CircleMath.calcRadius(width, height);
+			}
+		}
+
+		/**
+		 * setup the color d3 scale
+		 */
+		private function setupColorScale():void {
+			if (colorScale == null) {
+				colorScale = scale.ordinal()
+						.range(colors);
+			}
+		}
+
+		/**
+		 * setup the base d3 arc object, setting the outer and inner radius
+		 */
+		private function setupD3Arc(): void {
+			if (d3Arc == null) {
+				d3Arc = svg.arc()
+						.outerRadius(radius)
+						.innerRadius(50);
+			}
+		}
+
 		/**
 		 * when we get data, give it to the grid
 		 */
 		private function applyDataToChart(data:Array):void {
-			var scopedPie:* = pie;
-			svg.selectAll(".arc").remove();
-//			var arcs = svg.selectAll(".arc");
-//			var scopedD = scopedPie(data);
-//			var dat = arcs.data(scopedD);
-//			var enter = dat.enter();
-//			var arcsg = enter.append("g").attr("class", "arc");
-			g = svg.selectAll(".arc")
-					.data(scopedPie(data)).enter()
-					.append("g")
-					.attr("class", "arc");
-
-			var scopedColor:* = color;
-			gpath = g.append("path")
-					.attr("d", arc)
-					.style("fill", function(d:Object):* { return scopedColor(d.data.name); });
-
-			var scopedArc:* = arc;
-			var scopedRadius:Number = radius;
-			gtext = g.append("text")
-					.attr("class", "arclabel")
-//					.attr("transform", function(d:Object):String { return "translate(" + scopedArc.centroid(d) + ")"; })
-					.attr("transform", function(d:*):String {
-						var c:Array = scopedArc.centroid(d);
-						var x:Number = c[0];
-						var y:Number = c[1];
-						// pythagorean theorem for hypotenuse
-						var h:Number = Math.sqrt(x*x + y*y);
-						return "translate(" + (x/h * scopedRadius) +  ',' +
-								(y/h * scopedRadius) +  ")";
-					})
-					.attr("dy", ".35em")
-//					.style("text-anchor", "middle")
-					.attr("text-anchor", function(d:*):String {
-						// are we past the center?
-						return (d.endAngle + d.startAngle)/2 > Math.PI ?
-								"end" : "start";
-					})
-					.text(function(d:Object):String { return d.data.name + " (" + d.data.value + ")"; });
+			// Since this is called after the Behavior is setup, we can now setup the chart
+			setupChart();
+			// Actually apply the data
+			setupArcDOM(data);
+			setupGPathDOM();
+			setupGTextDOM();
+			setupInnerLabel(data);
 		}
 
 		/**
 		 * setup the chart and get it ready to receive data
 		 */
 		private function setupChart():void {
-			width = 500;
-			height = 300;
-			radius = Math.min(width, height) / 2;
-
-			color = scale.ordinal()
-					.range(["#9ECACF", "#B8E3E8", "#3F75A2", "#588EBC"]);
-
-			arc = d3.svg.arc()
-					.outerRadius(radius - 10)
-					.innerRadius(0);
-
-			pie = layout.pie()
-					.sort(null)
-					.value(function(d:*):* { return d.value; });
-
-			svg = d3Static.select(this.decoratedNode[0]).append("svg")
-					.append("g")
-					.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			setupRadius();
+			setupColorScale();
+			setupD3Arc();
+			setupD3Pie();
+			setupSVGDOM();
 		}
 
 		/**
@@ -166,7 +255,6 @@ package behaviors {
 		 */
 		override protected function onDeregister():void {
 			super.onDeregister();
-			svg.remove();
 		}
 
 		/**
@@ -174,7 +262,7 @@ package behaviors {
 		 */
 		override protected function onRegister():void {
 			super.onRegister();
-			setupChart();
+//			CircleMath;
 		}
 
 		/**

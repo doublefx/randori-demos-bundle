@@ -1,13 +1,10 @@
 package behaviors
 {
-	import d3.D3Area;
 	import d3.D3Axis;
-	import d3.D3Line;
 	import d3.D3Scale;
 	import d3.D3Selection;
 	import d3.d3Static;
 	import d3.scale;
-	import d3.time;
 
 	import randori.behaviors.AbstractBehavior;
 	import randori.jquery.JQuery;
@@ -36,7 +33,7 @@ package behaviors
 	/**
 	 * The chart for the gadget detail
 	 */
-	public class DateAreaChart extends AbstractBehavior {
+	public class GroupedBarChart extends AbstractBehavior {
 		//----------------------------------------------------------------------------
 		//
 		// Properties
@@ -80,22 +77,26 @@ package behaviors
 		//----------------------------------------------------------------------------
 
 		[View]
-		public var areachartsvg:JQuery;
+		public var groupedbarchartsvg:JQuery;
 		private var svg:D3Selection;
 
 		private var margin:Object;
 		private var width:Number = -1;
 		private var height:Number = -1;
 
-		private var x:D3Scale;
+		private var x0:D3Scale;
+		private var x1:D3Scale;
 		private var y:D3Scale;
 		private var xAxis:D3Axis;
 		private var yAxis:D3Axis;
-		private var line:D3Line;
-		private var area:D3Area;
-		private var parseDate:*;
+		private var bars:D3Selection;
+		private var colorScale:D3Scale;
+
+		private var legend:D3Selection;
 
 		private var yAxisText:D3Selection;
+
+		private var colors:Array = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
 
 		//----------------------------------------------------------------------------
 		//
@@ -103,38 +104,84 @@ package behaviors
 		//
 		//----------------------------------------------------------------------------
 
-		public function setYAxisText(label:String):void {
-			if (yAxisText == null)
-				return;
-			yAxisText.text(label);
+		private function setupLegend(valueNames:Array):void {
+			legend = svg.selectAll(".legend")
+					.data(valueNames.slice().reverse())
+					.enter().append("g")
+					.attr("class", "legend")
+					.attr("transform", function (d:*, i:Number):String {
+						return "translate(0," + i * 20 + ")";
+					});
+
+			legend.append("rect")
+					.attr("x", width - 18)
+					.attr("width", 18)
+					.attr("height", 18)
+					.style("fill", colorScale);
+
+			legend.append("text")
+					.attr("x", width - 24)
+					.attr("y", 9)
+					.attr("dy", ".35em")
+					.style("text-anchor", "end")
+					.text(function (d:*):* {
+						return d;
+					});
 		}
 
-		/**
-		 * set the data on the area and line DOM objects
-		 *
-		 * @param data the data to be displayed by the chart
-		 * @param area the D3Area object to which the data should be applied
-		 * @param line the D3Line object to which the data should be applied
-		 */
-		private function setAreaData(data:Array, area:D3Area, line:D3Line):void {
-			svg.select(".area")
-					.datum(data)
-					.attr("d", area);
+		private function setupBarsDOM(data:Array):void {
+			var scopedX0:* = x0;
+			svg.selectAll(".bar").remove();
+			var item:D3Selection = svg.selectAll(".bar")
+					.data(data)
+					.enter().append("g")
+					.attr("class", "g")
+					.attr("transform", function (d:*):String {
+						return "translate(" + scopedX0(d.name) + ",0)";
+					});
 
-			svg.select(".line")
-					.datum(data)
-					.attr("d", line);
+			var scopedX1:* = x1;
+			var scopedY:* = y;
+			var scopedColorScale:* = colorScale;
+			var scopedHeight:Number = height;
+			bars = item.selectAll("rect")
+					.data(function (d:*):Array {
+						return d.values;
+					})
+					.enter().append("rect")
+					.attr("width", x1.rangeBand())
+					.attr("x", function (d:*):* {
+						return scopedX1(d.name);
+					})
+					.attr("y", function (d:*):* {
+						return scopedY(d.value);
+					})
+					.attr("height", function (d:*):* {
+						return scopedHeight - scopedY(d.value);
+					})
+					.style("fill", function (d:*):* {
+						return scopedColorScale(d.name);
+					});
 		}
 
-		/**
-		 * setup the x axis DOM object including the text ticks
-		 *
-		 * @param xAxis the D3Axis object to use in the call function
-		 */
-		private function buildXAxisDOM(xAxis:D3Axis):void {
-			svg.select(".x.axis")
+		private function setupYAxisDOM():void {
+			yAxisText = svg.append("g")
+					.attr("class", "y axis")
+					.call(yAxis)
+					.append("text")
+					.attr("transform", "rotate(-90)")
+					.attr("y", 6)
+					.attr("dy", ".71em")
+					.style("text-anchor", "end");
+		}
+
+		private function setupXAxisDOM():void {
+			svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + height + ")")
 					.call(xAxis)
 					.selectAll("text")
+					.attr("class", "x axis text")
 					.style("text-anchor", "end")
 					.attr("dx", "-.8em")
 					.attr("dy", ".15em")
@@ -143,35 +190,41 @@ package behaviors
 					});
 		}
 
-		/**
-		 * build the D3Area object
-		 *
-		 * @return the D3Area object
-		 */
-		private function buildArea():D3Area {
-			var scopedX:* = x;
-			var scopedY:* = y;
-			return d3.svg.area()
-					.x(function(d:*):* { return scopedX(d.date); })
-					.y0(height)
-					.y1(function(d:*):* { return scopedY(d.value); });
+		private function setupDomains(data:Array, valueNames:Array):void {
+			x0.domain2(data.map(function (d:*):String {
+				return d.name;
+			}));
+			x1.domain2(valueNames).rangeRoundBands1([0, x0.rangeBand()]);
+			y.domain2([0, d3Static.max(data, function (d:*):* {
+				return d3Static.max(d.values, function (d:*):* {
+					return d.value;
+				});
+			})]);
 		}
 
-		/**
-		 * build the D3Line object
-		 *
-		 * @return the D3Line object
-		 */
-		private function buildLine():D3Line {
-			var scopedX:* = x;
-			var scopedY:* = y;
-			return d3.svg.line()
-					.x(function (d:*):* {
-						return scopedX(d.date);
-					})
-					.y(function (d:*):* {
-						return scopedY(d.value);
+		private function formatData(data:Array, valueNames:Array):void {
+			data.forEach(function (d:*):void {
+				d.values = valueNames.map(function (name:String):* {
+					return {name: name, value: +d[name]};
+				});
+			});
+		}
+
+		private function getValueNames(data:Array):Array {
+			return d3Static.keys(data[0])
+					.filter(function (key:String):Boolean {
+						return key !== "name";
 					});
+		}
+
+		public function setYAxisText(label:String):void {
+			if (yAxisText == null)
+				return;
+			yAxisText.text(label);
+		}
+
+		private function buildColorScale():D3Scale {
+			return scale.ordinal().range(colors);
 		}
 
 		/**
@@ -193,12 +246,20 @@ package behaviors
 		 * @param data the data that will be displayed in the chart
 		 * @return the x-D3Scale object
 		 */
-		private function buildXScale(width:Number, data:Array):D3Scale {
-			return time.scale()
-					.domain2(d3Static.extent(data, function (d:*):* {
-						return d.date;
-					}))
-					.range([0, width]);
+		private function buildX0Scale(width:Number):D3Scale {
+			return scale.ordinal()
+					.rangeRoundBands2([0, width], .1);
+		}
+
+		/**
+		 * build the x-D3Scale object
+		 *
+		 * @param width the width of the D3Scale object
+		 * @param data the data that will be displayed in the chart
+		 * @return the x-D3Scale object
+		 */
+		private function buildX1Scale():D3Scale {
+			return scale.ordinal();
 		}
 
 		/**
@@ -210,7 +271,8 @@ package behaviors
 		private function buildYAxis(y:D3Scale):D3Axis {
 			return d3.svg.axis()
 					.scale(y)
-					.orient("left");
+					.orient("left")
+					.tickFormat(d3Static.format(".2s"));
 		}
 
 		/**
@@ -221,37 +283,7 @@ package behaviors
 		 */
 		private function buildYScale(height:Number):D3Scale {
 			return scale.linear()
-					.domain2([0, 100])
 					.range([height, 0]);
-		}
-
-		/**
-		 * build the x and y axes in the DOM
-		 */
-		private function buildAxesDOM():void {
-			yAxisText = svg.append("g")
-					.attr("class", "y axis")
-					.call(yAxis)
-					.append("text")
-					.attr("transform", "rotate(-90)")
-					.attr("y", 6)
-					.attr("dy", ".71em")
-					.style("text-anchor", "end");
-
-			svg.append("g")
-					.attr("class", "x axis")
-					.attr("transform", "translate(0," + height + ")")
-		}
-
-		/**
-		 * build the area and line objects in the DOM
-		 */
-		private function buildAreaDOM():void {
-			svg.append("path")
-					.attr("class", "area");
-
-			svg.append("path")
-					.attr("class", "line");
 		}
 
 		/**
@@ -262,18 +294,18 @@ package behaviors
 		private function buildChartArea():D3Selection {
 			setupSize();
 
-			return d3Static.select(areachartsvg[0])
+			return d3Static.select(groupedbarchartsvg[0])
 					.append("g")
 					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		}
 
 		private function setupSize():void {
 			if (margin == null)
-				margin = {top: 20, right: 20, bottom: 70, left: 50};
+				margin = {top: 20, right: 20, bottom: 160, left: 50};
 
 			if (width == -1 || height == -1) {
-				width = areachartsvg.width() - margin.left - margin.right;
-				height = areachartsvg.height() - margin.top - margin.bottom;
+				width = groupedbarchartsvg.width() - margin.left - margin.right;
+				height = groupedbarchartsvg.height() - margin.top - margin.bottom;
 			}
 		}
 
@@ -281,26 +313,20 @@ package behaviors
 		 * when we get data, give it to the grid
 		 */
 		private function applyDataToChart(data:Array):void {
-			// since we now have the area chart behavior created, we can setup the chart internals
+			// since we now have the chart behavior created, we can setup the chart internals
 			setupChart();
 
-			// actually apply the data
-			var scopedParse:* = parseDate;
-			data.forEach(function(d:*):void {
-				try {
-					d.percentComplete = d.value;
-					d.date = scopedParse(d.date);
-				} catch (e) { }
-			});
+			var valueNames:Array = getValueNames(data);
+			formatData(data, valueNames);
 
-			x = buildXScale(width, data);
-			xAxis = buildXAxis(x);
-			buildXAxisDOM(xAxis);
+			setupDomains(data, valueNames);
 
-			// build the line and area
-			line = buildLine();
-			area = buildArea();
-			setAreaData(data, area, line);
+			setupXAxisDOM();
+			setupYAxisDOM();
+
+			setupBarsDOM(data);
+
+			setupLegend(valueNames);
 		}
 
 		/**
@@ -315,10 +341,13 @@ package behaviors
 				yAxis = buildYAxis(y);
 
 				// setup the date parser
-				parseDate = time.format("%d/%m/%Y").parse;
+				colorScale = buildColorScale();
 
-				buildAxesDOM();
-				buildAreaDOM();
+				x0 = buildX0Scale(width);
+				x1 = buildX1Scale();
+				xAxis = buildXAxis(x0);
+
+//				buildAxesDOM();
 			}
 		}
 
@@ -339,6 +368,6 @@ package behaviors
 		/**
 		 * Constructor
 		 */
-		public function DateAreaChart() { }
+		public function GroupedBarChart() { }
 	}
 }

@@ -71,9 +71,13 @@
 .behavior-filmstrip {
     -randori-behavior: "behaviors.Filmstrip";
 }
-	
+
 .behavior-dateareachart {
     -randori-behavior: "behaviors.DateAreaChart";
+}
+
+.behavior-groupedbarchart {
+    -randori-behavior: "behaviors.GroupedBarChart";
 }
 
 .behavior-piechart {

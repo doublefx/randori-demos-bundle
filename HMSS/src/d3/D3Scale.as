@@ -27,7 +27,10 @@ package d3 {
 		[JavaScriptMethod(name="domain")]
 		public function domain2(value:*):D3Scale {return null;}
 		public function range(range:Array):D3Scale {return null;}
-		public function rangeRoundBands(range:Array, value:Number):D3Scale {return null;}
+		[JavaScriptMethod(name="rangeRoundBands")]
+		public function rangeRoundBands1(range:Array):D3Scale {return null;}
+		[JavaScriptMethod(name="rangeRoundBands")]
+		public function rangeRoundBands2(range:Array, value:Number):D3Scale {return null;}
 		public function rangeRound(range:Array):D3Scale {return null;}
 		public function rangeBand():D3Scale {return null;}
 		public function map(func:Function):D3Scale {return null;}

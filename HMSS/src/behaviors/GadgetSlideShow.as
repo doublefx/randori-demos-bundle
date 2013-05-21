@@ -50,6 +50,8 @@ package behaviors {
 		public var gadgetProgressChart:DateAreaChart;
 		[View]
 		public var gadgetUsesChart:PieChart;
+		[View]
+		public var gadgetUsesCompareChart:GroupedBarChart;
 
 		public var activeGadget:Gadget;
 
@@ -80,6 +82,21 @@ package behaviors {
 
 			// set the active item to the first item in the list
 			setActive(_data[0]);
+
+			dataToCharts(data);
+		}
+
+		public function dataToCharts(data:Array):void {
+			var uses:Array = new Array();
+			data.forEach(function (gadget:Gadget):void {
+				uses.push({name: gadget.name,
+							"Lab Fails": gadget.failLabUses,
+							"Field Fails": gadget.failFieldUses,
+							"Lab Successes": gadget.succLabUses,
+							"Field Successes": gadget.succFieldUses})
+			});
+			gadgetUsesCompareChart.data = uses;
+			gadgetUsesCompareChart.setYAxisText("Gadget Uses");
 		}
 
 		public function setActive(gadget:Gadget):void {
@@ -93,6 +110,7 @@ package behaviors {
 			gadgetStatus.html(gadget.status);
 			gadgetDescription.html(gadget.description);
 			gadgetProgressChart.data = gadget.progressPercents;
+			gadgetProgressChart.setYAxisText("Percent Complete");
 			gadgetUsesChart.data = [{name:"Lab Fails", value:gadget.failLabUses},
 									{name:"Field Fails", value:gadget.failFieldUses},
 									{name:"Lab Successes", value:gadget.succLabUses},
@@ -101,16 +119,9 @@ package behaviors {
 
 		private function handleGadgetSelected( gadget:Gadget ):void {
 			setActive(gadget);
-//			var promise:Promise = viewStack.pushView( "views/gadget/gadgetDetail.html");
-//			promise.then( function( result:AbstractMediator ):void {
-//				//do something here with the new view if you want
-//				result.setViewData( gadget );
-//			} );
 		}
 
 		override protected function onRegister():void {
-			gadgetProgressChart.setYAxisText("Percent Complete");
-
 			gadgetSelector.registerItemSelect(handleGadgetSelected);
 		}
 

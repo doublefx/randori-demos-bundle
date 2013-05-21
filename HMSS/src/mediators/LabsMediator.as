@@ -29,7 +29,7 @@ package mediators {
 		public var gadgets:GadgetSlideShow;
 
 		[Inject]
-		public var labService:LabService
+		public var labService:LabService;
 
 		private function displayInList( data:Array ):void {
 			gadgets.data = data;
