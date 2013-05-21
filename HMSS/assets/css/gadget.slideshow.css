@@ -41,7 +41,7 @@ div {
 
 .mainSlideWindow {
     width: 350px;
-    height: 250px;
+    height: 233px;
     margin-top: 4px;
 }
 
@@ -80,13 +80,9 @@ div {
     /*overflow: visible;*/
 }
 
-svg {
+.gadgetProgress, .gadgetUses {
     width: 350px;
     height: 250px;
-    /*border:2px solid;*/
-    /*border-radius: 10px;*/
-    /*margin: 8px;*/
-    /*overflow: visible;*/
 }
 
 .gadgetUsesCompare .x.axis.text,
@@ -100,6 +96,23 @@ svg {
 
 .innerLabel {
     font-size: 1.2em;
+}
+
+.arcpath, .barrect {
+    transition: transform .5s fill, .5s;
+    transition: -webkit-transform .5s, fill .5s;
+
+    transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+}
+
+.arcpath:hover {
+    transform: scale(1.2, 1.2);
+    -webkit-transform: scale(1.2, 1.2);
+}
+
+.barrect:hover {
+    fill: black !important;
 }
 
 table {

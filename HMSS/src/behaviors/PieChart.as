@@ -88,7 +88,7 @@ package behaviors {
 		private var gtextDOM:D3Selection;
 		private var innerLabel:D3Selection;
 
-		private var colors:Array = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
+		public var colors:Array = ["#EEE", "#DDD", "#CCC", "#BBB", "#AAA", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222", "#111"];
 
 		//----------------------------------------------------------------------------
 		//
@@ -150,6 +150,7 @@ package behaviors {
 		private function setupGPathDOM():void {
 			var scopedColor:* = colorScale;
 			gpathDOM = arcDOM.append("path")
+					.attr("class", "arcpath")
 					.attr("d", d3Arc)
 					.style("fill", function (d:Object):* {
 						return scopedColor(d.data.name);

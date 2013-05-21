@@ -68,19 +68,19 @@
     -randori-behavior: "behaviors.GadgetSlideShow";
 }
 
-.behavior-filmstrip {
+.filmstrip {
     -randori-behavior: "behaviors.Filmstrip";
 }
 
-.behavior-dateareachart {
+.dateareachart {
     -randori-behavior: "behaviors.DateAreaChart";
 }
 
-.behavior-groupedbarchart {
+.groupedbarchart {
     -randori-behavior: "behaviors.GroupedBarChart";
 }
 
-.behavior-piechart {
+.piechart {
     -randori-behavior: "behaviors.PieChart";
 }
 

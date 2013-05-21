@@ -96,7 +96,7 @@ package behaviors
 
 		private var yAxisText:D3Selection;
 
-		private var colors:Array = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
+		public var colors:Array = ["#EEE", "#DDD", "#CCC", "#BBB", "#AAA", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222", "#111"];
 
 		//----------------------------------------------------------------------------
 		//
@@ -149,6 +149,7 @@ package behaviors
 						return d.values;
 					})
 					.enter().append("rect")
+					.attr("class", "barrect")
 					.attr("width", x1.rangeBand())
 					.attr("x", function (d:*):* {
 						return scopedX1(d.name);

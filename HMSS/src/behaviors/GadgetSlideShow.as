@@ -95,6 +95,7 @@ package behaviors {
 							"Lab Successes": gadget.succLabUses,
 							"Field Successes": gadget.succFieldUses})
 			});
+			gadgetUsesCompareChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
 			gadgetUsesCompareChart.data = uses;
 			gadgetUsesCompareChart.setYAxisText("Gadget Uses");
 		}
@@ -111,6 +112,7 @@ package behaviors {
 			gadgetDescription.html(gadget.description);
 			gadgetProgressChart.data = gadget.progressPercents;
 			gadgetProgressChart.setYAxisText("Percent Complete");
+			gadgetUsesChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
 			gadgetUsesChart.data = [{name:"Lab Fails", value:gadget.failLabUses},
 									{name:"Field Fails", value:gadget.failFieldUses},
 									{name:"Lab Successes", value:gadget.succLabUses},
