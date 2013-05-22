@@ -1,4 +1,4 @@
-package behaviors
+package behaviors.charts
 {
 	import d3.D3Area;
 	import d3.D3Axis;
@@ -80,10 +80,12 @@ package behaviors
 		//----------------------------------------------------------------------------
 
 		[View]
-		public var areachartsvg:JQuery;
+		public var areaChartSVG:JQuery;
 		private var svg:D3Selection;
 
-		private var margin:Object;
+		private var DEFAULT_MARGIN:Object = {top: 20, right: 20, bottom: 50, left: 50};
+
+		public var margin:Object;
 		private var width:Number = -1;
 		private var height:Number = -1;
 
@@ -135,6 +137,7 @@ package behaviors
 			svg.select(".x.axis")
 					.call(xAxis)
 					.selectAll("text")
+					.attr("class", "xAxisText")
 					.style("text-anchor", "end")
 					.attr("dx", "-.8em")
 					.attr("dy", ".15em")
@@ -262,18 +265,18 @@ package behaviors
 		private function buildChartArea():D3Selection {
 			setupSize();
 
-			return d3Static.select(areachartsvg[0])
+			return d3Static.select(areaChartSVG[0])
 					.append("g")
 					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		}
 
 		private function setupSize():void {
 			if (margin == null)
-				margin = {top: 20, right: 20, bottom: 70, left: 50};
+				margin = DEFAULT_MARGIN;
 
 			if (width == -1 || height == -1) {
-				width = areachartsvg.width() - margin.left - margin.right;
-				height = areachartsvg.height() - margin.top - margin.bottom;
+				width = areaChartSVG.width() - margin.left - margin.right;
+				height = areaChartSVG.height() - margin.top - margin.bottom;
 			}
 		}
 
@@ -334,6 +337,7 @@ package behaviors
 		 */
 		override protected function onRegister():void {
 			super.onRegister();
+			margin = DEFAULT_MARGIN;
 		}
 
 		/**

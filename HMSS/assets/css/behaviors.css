@@ -72,16 +72,16 @@
     -randori-behavior: "behaviors.Filmstrip";
 }
 
-.dateareachart {
-    -randori-behavior: "behaviors.DateAreaChart";
+.dateAreaChart {
+    -randori-behavior: "behaviors.charts.DateAreaChart";
 }
 
-.groupedbarchart {
-    -randori-behavior: "behaviors.GroupedBarChart";
+.groupedBarChart {
+    -randori-behavior: "behaviors.charts.GroupedBarChart";
 }
 
-.piechart {
-    -randori-behavior: "behaviors.PieChart";
+.pieChart {
+    -randori-behavior: "behaviors.charts.PieChart";
 }
 
 .simpleList {

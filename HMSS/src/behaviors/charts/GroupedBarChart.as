@@ -1,4 +1,4 @@
-package behaviors
+package behaviors.charts
 {
 	import d3.D3Axis;
 	import d3.D3Scale;
@@ -77,10 +77,12 @@ package behaviors
 		//----------------------------------------------------------------------------
 
 		[View]
-		public var groupedbarchartsvg:JQuery;
+		public var groupedBarChartSVG:JQuery;
 		private var svg:D3Selection;
 
-		private var margin:Object;
+		private var DEFAULT_MARGIN:Object = {top: 20, right: 20, bottom: 50, left: 50};
+
+		public var margin:Object;
 		private var width:Number = -1;
 		private var height:Number = -1;
 
@@ -96,7 +98,12 @@ package behaviors
 
 		private var yAxisText:D3Selection;
 
-		public var colors:Array = ["#EEE", "#DDD", "#CCC", "#BBB", "#AAA", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222", "#111"];
+		private var DEFAULT_COLORS:Array =
+				["#EEE", "#DDD", "#CCC", "#BBB",
+					"#AAA", "#999", "#888", "#777",
+					"#666", "#555", "#444", "#333",
+					"#222", "#111"];
+		public var colors:Array;
 
 		//----------------------------------------------------------------------------
 		//
@@ -105,23 +112,27 @@ package behaviors
 		//----------------------------------------------------------------------------
 
 		private function setupLegend(valueNames:Array):void {
+			var squareSize:Number = 18;
+			var squareMargin:Number = 1;
+
 			legend = svg.selectAll(".legend")
 					.data(valueNames.slice().reverse())
 					.enter().append("g")
 					.attr("class", "legend")
 					.attr("transform", function (d:*, i:Number):String {
-						return "translate(0," + i * 20 + ")";
+						return "translate(0," + i * (squareSize + squareMargin * 2) + ")";
 					});
 
 			legend.append("rect")
-					.attr("x", width - 18)
-					.attr("width", 18)
-					.attr("height", 18)
+					.attr("x", width - squareSize)
+					.attr("width", squareSize)
+					.attr("height", squareSize)
 					.style("fill", colorScale);
 
 			legend.append("text")
-					.attr("x", width - 24)
-					.attr("y", 9)
+					.attr("class", "legendText")
+					.attr("x", width - squareSize - 2 * squareMargin - 2)
+					.attr("y", squareSize/2)
 					.attr("dy", ".35em")
 					.style("text-anchor", "end")
 					.text(function (d:*):* {
@@ -149,7 +160,7 @@ package behaviors
 						return d.values;
 					})
 					.enter().append("rect")
-					.attr("class", "barrect")
+					.attr("class", "barRect")
 					.attr("width", x1.rangeBand())
 					.attr("x", function (d:*):* {
 						return scopedX1(d.name);
@@ -225,6 +236,8 @@ package behaviors
 		}
 
 		private function buildColorScale():D3Scale {
+			if (colors == null)
+				colors = DEFAULT_COLORS;
 			return scale.ordinal().range(colors);
 		}
 
@@ -295,18 +308,18 @@ package behaviors
 		private function buildChartArea():D3Selection {
 			setupSize();
 
-			return d3Static.select(groupedbarchartsvg[0])
+			return d3Static.select(groupedBarChartSVG[0])
 					.append("g")
 					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		}
 
 		private function setupSize():void {
 			if (margin == null)
-				margin = {top: 20, right: 20, bottom: 160, left: 50};
+				margin = DEFAULT_MARGIN;
 
 			if (width == -1 || height == -1) {
-				width = groupedbarchartsvg.width() - margin.left - margin.right;
-				height = groupedbarchartsvg.height() - margin.top - margin.bottom;
+				width = groupedBarChartSVG.width() - margin.left - margin.right;
+				height = groupedBarChartSVG.height() - margin.top - margin.bottom;
 			}
 		}
 
@@ -347,8 +360,6 @@ package behaviors
 				x0 = buildX0Scale(width);
 				x1 = buildX1Scale();
 				xAxis = buildXAxis(x0);
-
-//				buildAxesDOM();
 			}
 		}
 
@@ -364,6 +375,8 @@ package behaviors
 		 */
 		override protected function onRegister():void {
 			super.onRegister();
+			margin = DEFAULT_MARGIN;
+			colors = DEFAULT_COLORS;
 		}
 
 		/**

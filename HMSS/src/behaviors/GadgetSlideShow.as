@@ -1,4 +1,8 @@
 package behaviors {
+	import behaviors.charts.DateAreaChart;
+	import behaviors.charts.GroupedBarChart;
+	import behaviors.charts.PieChart;
+
 	import randori.behaviors.AbstractBehavior;
 	import randori.jquery.JQuery;
 
@@ -79,12 +83,12 @@ package behaviors {
 			_data = value;
 
 			if (gadgetSelector)
-				gadgetSelector.data = value;
+				gadgetSelector.data = _data;
 
 			// set the active item to the first item in the list
 			setActive(_data[0]);
 
-			dataToCharts(data);
+			dataToCharts(_data);
 		}
 
 		public function dataToCharts(data:Array):void {
@@ -97,6 +101,7 @@ package behaviors {
 								"Lab Successes": gadget.succLabUses,
 								"Field Successes": gadget.succFieldUses})
 				});
+				gadgetUsesCompareChart.margin = {top: 20, right: 20, bottom: 160, left: 50};
 				gadgetUsesCompareChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
 				gadgetUsesCompareChart.data = uses;
 				gadgetUsesCompareChart.setYAxisText("Gadget Uses");
@@ -118,6 +123,7 @@ package behaviors {
 			if (gadgetDescription)
 				gadgetDescription.html(gadget.description);
 			if (gadgetProgressChart) {
+				gadgetProgressChart.margin = {top: 20, right: 20, bottom: 70, left: 50};
 				gadgetProgressChart.data = gadget.progressPercents;
 				gadgetProgressChart.setYAxisText("Percent Complete");
 			}

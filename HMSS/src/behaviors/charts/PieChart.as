@@ -1,4 +1,4 @@
-package behaviors {
+package behaviors.charts {
 	import d3.D3Arc;
 	import d3.D3Pie;
 	import d3.D3Scale;
@@ -73,12 +73,15 @@ package behaviors {
 		//----------------------------------------------------------------------------
 
 		[View]
-		public var piechartsvg:JQuery;
+		public var pieChartSVG:JQuery;
 		private var svgDOM:D3Selection;
 
 		private var width:Number;
 		private var height:Number;
-		private var radius:Number = -1;
+		private var outerRadius:Number = -1;
+
+		private var DEFAULT_INNER_RADIUS:Number = 50;
+		public var innerRadius:Number;
 
 		private var colorScale:D3Scale;
 		private var d3Arc:D3Arc;
@@ -88,7 +91,12 @@ package behaviors {
 		private var gtextDOM:D3Selection;
 		private var innerLabel:D3Selection;
 
-		public var colors:Array = ["#EEE", "#DDD", "#CCC", "#BBB", "#AAA", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222", "#111"];
+		private var DEFAULT_COLORS:Array =
+				["#EEE", "#DDD", "#CCC", "#BBB",
+					"#AAA", "#999", "#888", "#777",
+					"#666", "#555", "#444", "#333",
+					"#222", "#111"];
+		public var colors:Array;
 
 		//----------------------------------------------------------------------------
 		//
@@ -96,7 +104,7 @@ package behaviors {
 		//
 		//----------------------------------------------------------------------------
 
-		private function setupInnerLabel(data:Array):void {
+		private function setupInnerLabel(data:Array):D3Selection {
 			if (innerLabel == null) {
 				innerLabel = svgDOM.append("text")
 						.attr("class", "innerLabel")
@@ -106,18 +114,20 @@ package behaviors {
 			data.forEach(function(d:*):void {
 				total += d.value;
 			});
-			innerLabel.text("Total: " + total);
+			return innerLabel.text("Total: " + total);
 		}
 
 		/**
 		 * setup the text tag (the pie slice text label)
 		 */
-		private function setupGTextDOM():void {
+		private function setupGTextDOM():D3Selection {
 			var scopedArc:* = d3Arc;
 //			var scopedRadius:Number = radius;
-			gtextDOM = arcDOM.append("text")
+			return arcDOM.append("text")
 					.attr("class", "arcLabel")
-					.attr("transform", function(d:Object):String { return "translate(" + scopedArc.centroid(d) + ")"; })
+					.attr("transform", function(d:Object):String {
+						return "translate(" + scopedArc.centroid(d) + ")";
+					})
 //					.attr("transform", function (d:*):String {
 //						var c:Array = scopedArc.centroid(d);
 //						var x:Number = c[0];
@@ -147,10 +157,10 @@ package behaviors {
 		/**
 		 * setup the path DOM object for each arc object.
 		 */
-		private function setupGPathDOM():void {
+		private function setupGPathDOM():D3Selection {
 			var scopedColor:* = colorScale;
-			gpathDOM = arcDOM.append("path")
-					.attr("class", "arcpath")
+			return arcDOM.append("path")
+					.attr("class", "arcPath")
 					.attr("d", d3Arc)
 					.style("fill", function (d:Object):* {
 						return scopedColor(d.data.name);
@@ -162,10 +172,10 @@ package behaviors {
 		 *
 		 * @param data the data array that holds the values to be displayed by the pie chart
 		 */
-		private function setupArcDOM(data:Array):void {
+		private function setupArcDOM(data:Array):D3Selection {
 			var scopedPie:* = d3Pie;
 			svgDOM.selectAll(".arc").remove();
-			arcDOM = svgDOM.selectAll(".arc")
+			return svgDOM.selectAll(".arc")
 					.data(scopedPie(data)).enter()
 					.append("g")
 					.attr("class", "arc");
@@ -174,57 +184,53 @@ package behaviors {
 		/**
 		 * setup the svg DOM object
 		 */
-		private function setupSVGDOM():void {
-			if (svgDOM == null) {
-				svgDOM = d3Static.select(piechartsvg[0])
-						.append("g")
-						.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-			}
+		private function buildSVGDOM():D3Selection {
+			return d3Static.select(pieChartSVG[0])
+					.append("g")
+					.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 		}
 
 		/**
 		 * setup the d3 pie object
 		 */
-		private function setupD3Pie():void {
-			if (d3Pie == null) {
-				d3Pie = layout.pie()
-						.sort(null)
-						.value(function (d:*):* {
-							return d.value;
-						});
-			}
+		private function buildD3Pie():D3Pie {
+			return layout.pie()
+					.sort(null)
+					.value(function (d:*):* {
+						return d.value;
+					});
 		}
 
 		/**
 		 * calculate the radius based on the width and height of the svg area
 		 */
-		private function setupRadius():void {
-			if (radius == -1) { // if the radius hasn't been set yet
-				width = piechartsvg.width();
-				height = piechartsvg.height();
-				radius = CircleMath.calcRadius(width, height);
-			}
+		private function calcRadius():Number {
+			width = pieChartSVG.width();
+			height = pieChartSVG.height();
+			return CircleMath.calcRadius(width, height);
 		}
 
 		/**
 		 * setup the color d3 scale
 		 */
-		private function setupColorScale():void {
-			if (colorScale == null) {
-				colorScale = scale.ordinal()
-						.range(colors);
-			}
+		private function buildColorScale():D3Scale {
+			if (colors == null)
+				colors = DEFAULT_COLORS;
+
+			return scale.ordinal().range(colors);
 		}
 
 		/**
 		 * setup the base d3 arc object, setting the outer and inner radius
 		 */
-		private function setupD3Arc(): void {
-			if (d3Arc == null) {
-				d3Arc = svg.arc()
-						.outerRadius(radius)
-						.innerRadius(50);
-			}
+		private function buildD3Arc(): D3Arc {
+			if (outerRadius < 0)
+				outerRadius = calcRadius();
+			if (innerRadius < 0)
+				innerRadius = DEFAULT_INNER_RADIUS;
+			return svg.arc()
+					.outerRadius(outerRadius)
+					.innerRadius(innerRadius);
 		}
 
 		/**
@@ -234,21 +240,23 @@ package behaviors {
 			// Since this is called after the Behavior is setup, we can now setup the chart
 			setupChart();
 			// Actually apply the data
-			setupArcDOM(data);
-			setupGPathDOM();
-			setupGTextDOM();
-			setupInnerLabel(data);
+			arcDOM = setupArcDOM(data);
+			gpathDOM = setupGPathDOM();
+			gtextDOM = setupGTextDOM();
+			innerLabel = setupInnerLabel(data);
 		}
 
 		/**
 		 * setup the chart and get it ready to receive data
 		 */
 		private function setupChart():void {
-			setupRadius();
-			setupColorScale();
-			setupD3Arc();
-			setupD3Pie();
-			setupSVGDOM();
+			if (svgDOM == null) {
+				outerRadius = calcRadius();
+				colorScale = buildColorScale();
+				d3Arc = buildD3Arc();
+				d3Pie = buildD3Pie();
+				svgDOM = buildSVGDOM();
+			}
 		}
 
 		/**
@@ -263,7 +271,8 @@ package behaviors {
 		 */
 		override protected function onRegister():void {
 			super.onRegister();
-//			CircleMath;
+			innerRadius = DEFAULT_INNER_RADIUS;
+			colors = DEFAULT_COLORS;
 		}
 
 		/**

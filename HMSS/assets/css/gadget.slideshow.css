@@ -8,9 +8,12 @@ div {
     padding:0px;
 }
 
-.imageRow>li {
-    float: left;
+.filmstripItem {
     display: block;
+    float: left;
+    height: 50px;
+    width: 70px;
+    border: 0px;
     padding: 4px;
     margin: 0px;
     opacity: 0.7;
@@ -18,15 +21,7 @@ div {
     filter: alpha(opacity=70);
 }
 
-.imageRow>li>img {
-    border: 0px;
-    height: 50px; /* just incase the images are a different size */
-    width: 70px; /* ditto */
-    margin: 0px;
-    padding:0px;
-}
-
-.imageRow>li:hover {
+.filmstripItem:hover {
     opacity: 1.0;
     background-color:#bef;
     filter: alpha(opacity=100);
@@ -37,6 +32,11 @@ div {
     overflow-y: hidden;
     width: 350px;
     height: 75px; /* give it enough space for the images and the scrollbar, if present */
+    /*change to a vertical layout*/
+    /*overflow-x: hidden;*/
+    /*overflow-y: scroll;*/
+    /*width: 90px;*/
+    /*height: 233px;*/
 }
 
 .mainSlideWindow {
@@ -98,21 +98,30 @@ div {
     font-size: 1.2em;
 }
 
-.arcpath, .barrect {
-    transition: transform .5s fill, .5s;
-    transition: -webkit-transform .5s, fill .5s;
+.arcPath, .barRect {
+    transition: all .5s;
 
     transform: scale(1, 1);
     -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
 }
 
-.arcpath:hover {
+.arcPath:hover {
     transform: scale(1.2, 1.2);
     -webkit-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
 }
 
-.barrect:hover {
+.barRect:hover {
     fill: black !important;
+}
+
+.line:hover {
+    stroke: black;
+}
+
+.area:hover {
+    fill: white;
 }
 
 table {
@@ -141,3 +150,11 @@ table tr th:last-child {
     border-right: 0;
     padding-right: 0;
 }
+
+/*svg {*/
+    /*overflow: visible;*/
+/*}*/
+
+/*div {*/
+    /*overflow: visible;*/
+/*}*/

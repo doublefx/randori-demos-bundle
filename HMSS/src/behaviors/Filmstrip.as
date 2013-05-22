@@ -1,6 +1,4 @@
 package behaviors {
-	import eventBus.HMSSBus;
-
 	import randori.behaviors.AbstractBehavior;
 	import randori.jquery.Event;
 	import randori.jquery.JQuery;
@@ -28,10 +26,7 @@ package behaviors {
 	public class Filmstrip extends AbstractBehavior {
 
 		[View]
-		public var imageRow:JQuery;
-
-		[Inject]
-		public var bus:HMSSBus;
+		public var images:JQuery;
 
 		private var itemSelectedHandlers:Array
 
@@ -59,23 +54,23 @@ package behaviors {
 			_data = value;
 
 			// remove the list items that already exist
-			imageRow.remove("li");
+			images.remove(".filmstripItem");
 
 			// add each new list item
 			var item:JQuery
 			var totalWidth:Number = 0;
 			for (var i:int = 0; i < _data.length; i++) {
 				// create the item
-				imageRow.append("<li id='gadget" + i + "'><img src='" + _data[i].image + "'/></li>");
+				images.append("<img id='gadget" + i + "' class='filmstripItem' src='" + _data[i].image + "'/>");
 				// add a click listener to the item
-				item = imageRow.find("#gadget" + i);
+				item = images.find("#gadget" + i);
 				item.click(_data[i], itemClicked);
 
 				// total the width of the items
 				totalWidth += item.outerWidth(true);
 			}
 			// set the width of the imageRow to the total width of the items
-			imageRow.width(totalWidth);
+			images.width(totalWidth);
 		}
 
 		public function itemClicked(event:Event):void {
@@ -84,7 +79,6 @@ package behaviors {
 			itemSelectedHandlers.forEach(function (f:Function):void {
 				f(event.data);
 			});
-//			setActive(event.data);
 		}
 
 		public function registerItemSelect(func:Function):void {
