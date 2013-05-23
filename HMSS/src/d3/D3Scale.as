@@ -36,6 +36,9 @@ package d3 {
 		public function map(func:Function):D3Scale {return null;}
 		public function slice():D3Scale {return null;}
 		public function reverse():D3Scale {return null;}
+		public function ticks(value:Number):D3Scale {return null;}
+		public function tickSize(value0:Number, value1:Number, value2:Number):D3Scale {return null;}
+		public function tickFormat(value:String):D3Scale {return null;}
 
 		public function D3Scale() {
 		}

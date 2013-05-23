@@ -22,7 +22,8 @@ package d3 {
 	 */
 	[JavaScript(export="false")]
 	public class D3Selection {
-		public function append(value:String):D3Selection {return null;}
+		public function append(name:String):D3Selection {return null;}
+		public function insert(name:String, before:String):D3Selection {return null;}
 		public function attr(name:String, value:*):D3Selection {return null;}
 		public function style(name:String, value:*):D3Selection {return null;}
 		public function call(value:*):D3Selection {return null;}
@@ -33,6 +34,8 @@ package d3 {
 		public function select(value:String):D3Selection {return null;}
 		public function selectAll(value:String):D3Selection {return null;}
 		public function remove():D3Selection {return null;}
+		public function classed(value:String):D3Selection {return null;}
+		public function filter(func:Function):D3Selection {return null;}
 
 		public function D3Selection() { }
 	}

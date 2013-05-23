@@ -43,28 +43,27 @@ package behaviors.charts {
 		[View]
 		public var pieChartSVG:JQuery;
 		private var svgDOM:D3Selection;
-
-		private var width:Number;
-		private var height:Number;
-		private var outerRadius:Number = -1;
-
-		private var DEFAULT_INNER_RADIUS:Number = 50;
-		public var innerRadius:Number;
-
-		private var colorScale:D3Scale;
-		private var d3Arc:D3Arc;
-		private var d3Pie:D3Pie;
 		private var arcDOM:D3Selection;
 		private var gpathDOM:D3Selection;
 		private var gtextDOM:D3Selection;
 		private var innerLabel:D3Selection;
 
+		public var colors:Array;
+		private var width:Number;
+		private var height:Number;
+		private var outerRadius:Number = -1;
+		public var innerRadius:Number = -1;
+
+		private var colorScale:D3Scale;
+		private var d3Arc:D3Arc;
+		private var d3Pie:D3Pie;
+
+		private var DEFAULT_INNER_RADIUS:Number = 50;
 		private var DEFAULT_COLORS:Array =
 				["#EEE", "#DDD", "#CCC", "#BBB",
 					"#AAA", "#999", "#888", "#777",
 					"#666", "#555", "#444", "#333",
 					"#222", "#111"];
-		public var colors:Array;
 
 		//----------------------------------------------------------------------------
 		//
@@ -110,6 +109,7 @@ package behaviors.charts {
 						.attr("class", "innerLabel")
 						.style("text-anchor", "middle")
 			}
+			// calculate the total number of data counts
 			var total:Number = 0;
 			data.forEach(function(d:*):void {
 				try {

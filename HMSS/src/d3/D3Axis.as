@@ -24,7 +24,8 @@ package d3 {
 	public class D3Axis {
 		public function scale(scale:D3Scale):D3Axis {return null;}
 		public function orient(value:String):D3Axis {return null;}
-		public function tickFormat(value:D3Format):D3Axis {return null;}
+		public function tickFormat(value:*):D3Axis {return null;}
+		public function tickSize(value:Number):D3Axis {return null;}
 
 		public function D3Axis() { }
 	}

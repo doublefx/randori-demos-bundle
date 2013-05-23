@@ -110,6 +110,12 @@ div {
 	display: none;
 }
 
+.grid .tick {
+	stroke: lightgrey;
+	stroke-width: 1px;
+	/*opacity: 0.7;*/
+}
+
 .line {
 	fill: none;
 	stroke: steelblue;
@@ -152,7 +158,7 @@ div {
 }
 
 .area:hover {
-	fill: white;
+	opacity : 0;
 }
 
 table {

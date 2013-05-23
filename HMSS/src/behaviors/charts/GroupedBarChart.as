@@ -56,6 +56,7 @@ package behaviors.charts
 		private var yAxis:D3Axis;
 		private var colorScale:D3Scale;
 
+		private var gridDOM:D3Selection;
 		private var xAxisDOM:D3Selection;
 		private var yAxisDOM:D3Selection;
 		private var yAxisTextDOM:D3Selection;
@@ -186,6 +187,24 @@ package behaviors.charts
 						return scopedColorScale(d.name);
 					});
 			return bars;
+		}
+
+		private function buildGridDOM():D3Selection {
+			if (xAxis == null)
+				xAxis = buildXAxis(x0);
+			if (yAxis == null)
+				yAxis = buildYAxis(y);
+
+			// build the grid
+			var grid:D3Selection = svg.append("g").attr("class", "grid");
+
+			grid.append("g").attr("class", "yaxisgrid").call( yAxis.orient("right").tickFormat("").tickSize(width) );
+
+			grid.select("g.yaxisgrid").selectAll(".tick")
+					.filter(function(d:*, i:Number):D3Selection {return d3Static.select(this).classed('minor');} );
+
+			grid.select("g.yaxisgrid .domain").style('fill', 'none');
+			return grid;
 		}
 
 		/**
@@ -393,6 +412,7 @@ package behaviors.charts
 
 			xAxisDOM = buildXAxisDOM();
 			yAxisDOM = buildYAxisDOM();
+			gridDOM = buildGridDOM();
 			barsDOM = buildBarsDOM(data);
 			legendDOM = buildLegend(valueNames);
 		}
@@ -404,16 +424,15 @@ package behaviors.charts
 			if (svg == null) {
 				svg = buildChartArea();
 
-				// build the y axis (can't build the x axis til we have the data)
-				y = buildYScale(height);
-				yAxis = buildYAxis(y);
-
-				// setup the date parser
+				// setup the color scale
 				colorScale = buildColorScale();
 
+				// build the axes
 				x0 = buildX0Scale(width);
 				x1 = buildX1Scale();
 				xAxis = buildXAxis(x0);
+				y = buildYScale(height);
+				yAxis = buildYAxis(y);
 			}
 		}
 

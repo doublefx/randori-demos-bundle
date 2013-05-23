@@ -46,6 +46,7 @@ package behaviors.charts
 		[View]
 		public var areaChartSVG:JQuery;
 		private var svg:D3Selection;
+		private var grid:D3Selection;
 		private var yAxisText:D3Selection;
 
 		public var margin:Object;
@@ -143,6 +144,15 @@ package behaviors.charts
 					.attr("transform", function (d:*):* {
 						return "rotate(-45)"
 					});
+
+			// build and add the x-axis grid
+			grid.selectAll("g.xaxisgrid").remove(); // make sure we don't have an old xaxisgrid
+			grid.insert("g", ":first-child").attr("class", "xaxisgrid").call( xAxis.orient("bottom").tickFormat("").tickSize(height) );
+
+			grid.select("g.xaxisgrid").selectAll(".tick")
+					.filter(function(d:*, i:Number):D3Selection {return d3Static.select(this).classed('minor');} );
+
+			grid.select("g.xaxisgrid .domain").style('fill', 'none');
 		}
 
 		/**
@@ -243,6 +253,16 @@ package behaviors.charts
 			svg.append("g")
 					.attr("class", "x axis")
 					.attr("transform", "translate(0," + height + ")");
+
+			// build the grid
+			grid = svg.append("g").attr("class", "grid");
+			// build the y-axis grid (x-axis grid has to wait till we build the x-axis)
+			grid.append("g").attr("class", "yaxisgrid").call( yAxis.orient("right").tickFormat("").tickSize(width) );
+
+			grid.select("g.yaxisgrid").selectAll(".tick")
+					.filter(function(d:*, i:Number):D3Selection {return d3Static.select(this).classed('minor');} );
+
+			grid.select("g.yaxisgrid .domain").style('fill', 'none');
 		}
 
 		/**
@@ -287,14 +307,7 @@ package behaviors.charts
 			setupChart();
 
 			// actually apply the data
-			var scopedParse:* = parseDate;
-			data.forEach(function(d:*):void {
-				try {
-					d.percentComplete = d.value;
-					d.date = scopedParse(d.date);
-				} catch (e) { }
-			});
-
+			formatData(data);
 			x = buildXScale(width, data);
 			xAxis = buildXAxis(x);
 			buildXAxisDOM(xAxis);
@@ -303,6 +316,21 @@ package behaviors.charts
 			line = buildLine();
 			area = buildArea();
 			setAreaData(data, area, line);
+		}
+
+		/**
+		 * format the data into a format the the behavior can use internally
+		 *
+		 * @param data the data array that will be formatted
+		 */
+		private function formatData(data:Array):void {
+			var scopedParse:* = parseDate;
+			data.forEach(function (d:*):void {
+				try {
+					d.percentComplete = d.value;
+					d.date = scopedParse(d.date);
+				} catch (e) { }
+			});
 		}
 
 		/**
