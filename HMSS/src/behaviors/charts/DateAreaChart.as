@@ -48,6 +48,7 @@ package behaviors.charts
 		private var svg:D3Selection;
 		private var grid:D3Selection;
 		private var yAxisText:D3Selection;
+		private var xAxisDOM:D3Selection;
 
 		public var margin:Object;
 		private var width:Number = -1;
@@ -134,14 +135,13 @@ package behaviors.charts
 		 * @param xAxis the D3Axis object to use in the call function
 		 */
 		private function buildXAxisDOM(xAxis:D3Axis):void {
-			svg.select(".x.axis")
-					.call(xAxis)
+			xAxisDOM.call(xAxis)
 					.selectAll("text")
 					.attr("class", "xAxisText")
 					.style("text-anchor", "end")
 					.attr("dx", "-.8em")
 					.attr("dy", ".15em")
-					.attr("transform", function (d:*):* {
+					.attr("transform", function (d:*):String {
 						return "rotate(-45)"
 					});
 
@@ -250,7 +250,7 @@ package behaviors.charts
 					.attr("dy", ".71em")
 					.style("text-anchor", "end");
 
-			svg.append("g")
+			xAxisDOM = svg.append("g")
 					.attr("class", "x axis")
 					.attr("transform", "translate(0," + height + ")");
 
