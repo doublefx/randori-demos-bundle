@@ -63,15 +63,13 @@ div {
 
 .gadgetStatus {
 	font-style: italic;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 8px;
 }
 
 .gadgetDescription {
 	padding-top: 8px;
-}
-
-.gadgetProgress {
-	width: 40px;
-	height: 250px;
 }
 
 .gadgetUsesCompare>svg {
@@ -85,6 +83,21 @@ div {
 	height: 250px;
 }
 
+.gadgetCurrentProgress {
+	width: 40px;
+	height: 40px;
+	float: left;
+}
+
+.gadgetCurrentProgress .innerLabel{
+	font-weight: bold;
+	/*fill: gray;*/
+}
+
+.gadgetCurrentProgress .arcLabel{
+	display: none;
+}
+
 .gadgetUsesCompare .x.axis.text,
 .gadgetUsesCompare .legend {
 	font-size: .75em;
@@ -94,7 +107,7 @@ div {
 	font-size: .7em;
 }
 
-.innerLabel {
+.gadgetUses .innerLabel {
 	font-size: 1.2em;
 }
 

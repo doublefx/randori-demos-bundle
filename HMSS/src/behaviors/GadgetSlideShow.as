@@ -51,6 +51,8 @@ package behaviors {
 		[View(required="false")]
 		public var gadgetDescription:JQuery;
 		[View(required="false")]
+		public var gadgetCurrentProgress:PieChart;
+		[View(required="false")]
 		public var gadgetProgressChart:DateAreaChart;
 		[View(required="false")]
 		public var gadgetUsesChart:PieChart;
@@ -122,6 +124,14 @@ package behaviors {
 				gadgetStatus.html(gadget.status);
 			if (gadgetDescription)
 				gadgetDescription.html(gadget.description);
+			if (gadgetCurrentProgress) {
+				var currentPercent:Number = gadget.progressPercents[gadget.progressPercents.length - 1].value;
+				gadgetCurrentProgress.colors = ["#4682B4", "#B0E0E6"];
+				gadgetCurrentProgress.innerRadius = 10;
+				gadgetCurrentProgress.data = [{name:"Current Progress", value:currentPercent},
+												{name:"Incomplete Progress", value:100 - currentPercent}];
+				gadgetCurrentProgress.setInnerLabelText(currentPercent + "%");
+			}
 			if (gadgetProgressChart) {
 				gadgetProgressChart.margin = {top: 20, right: 20, bottom: 70, left: 50};
 				gadgetProgressChart.data = gadget.progressPercents;

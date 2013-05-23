@@ -109,14 +109,7 @@ package behaviors.charts {
 						.attr("class", "innerLabel")
 						.style("text-anchor", "middle")
 			}
-			// calculate the total number of data counts
-			var total:Number = 0;
-			data.forEach(function(d:*):void {
-				try {
-					total += d.value;
-				} catch (e) { }
-			});
-			return innerLabel.text("Total: " + total);
+			return innerLabel;
 		}
 
 		/**
@@ -179,7 +172,7 @@ package behaviors.charts {
 			svgDOM.selectAll(".arc").remove();
 			return svgDOM.selectAll(".arc")
 					.data(scopedPie(data)).enter()
-					.append("g")
+					.insert("g", "text")
 					.attr("class", "arc");
 		}
 
@@ -246,6 +239,21 @@ package behaviors.charts {
 			gpathDOM = setupGPathDOM();
 			gtextDOM = setupGTextDOM();
 			innerLabel = setupInnerLabel(data);
+			// set the inner label text
+			// calculate the total number of data counts
+			var total:Number = 0;
+			data.forEach(function(d:*):void {
+				try {
+					total += d.value;
+				} catch (e) { }
+			});
+			setInnerLabelText("Total: " + total);
+		}
+
+		public function setInnerLabelText(text:String):void {
+			if (innerLabel == null)
+				return;
+			innerLabel.text(text);
 		}
 
 		/**
