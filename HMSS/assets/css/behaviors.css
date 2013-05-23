@@ -1,105 +1,105 @@
 ﻿.hmssApp {
-    -randori-context: "startup.DemoContext";
-    -randori-mediator: "mediators.IndexMediator";
+	-randori-context: "startup.DemoContext";
+	-randori-mediator: "mediators.IndexMediator";
 }
 
 .siteHeader {
-    -randori-behavior: "behaviors.SiteHeader";
-    -randori-fragment: "fragment/siteHeader.html";
+	-randori-behavior: "behaviors.SiteHeader";
+	-randori-fragment: "fragment/siteHeader.html";
 }
 
 .mediator-login-area
 {
-    -randori-mediator: "mediators.login.LoginMediator";
+	-randori-mediator: "mediators.login.LoginMediator";
 }
 
 .viewStack {
-    -randori-behavior: "randori.behaviors.ViewStack";
+	-randori-behavior: "randori.behaviors.ViewStack";
 }
 
 .verticalTabs {
-    -randori-behavior: "behaviors.VerticalTabs";
+	-randori-behavior: "behaviors.VerticalTabs";
 }
 
 .intel {
-    -randori-mediator: "mediators.IntelMediator";
-    -randori-fragment: "fragment/intelList.html";
+	-randori-mediator: "mediators.IntelMediator";
+	-randori-fragment: "fragment/intelList.html";
 }
 
 .labs {
-    -randori-mediator: "mediators.LabsMediator";
-    -randori-fragment: "fragment/gadgetsSlideshowFragment.html";
+	-randori-mediator: "mediators.LabsMediator";
+	-randori-fragment: "fragment/gadgetsSlideshowFragment.html";
 }
 
 .gadgetDetail {
-    -randori-mediator: "mediators.gadget.GadgetDetail";
+	-randori-mediator: "mediators.gadget.GadgetDetail";
 }
 
 .targets {
-    -randori-mediator: "mediators.TargetsMediator";
+	-randori-mediator: "mediators.TargetsMediator";
 }
 
 .targetDetail {
-    -randori-mediator: "mediators.target.TargetDetail";
+	-randori-mediator: "mediators.target.TargetDetail";
 }
 
 .targetLocation {
-    -randori-mediator: "mediators.target.TargetLocation";
+	-randori-mediator: "mediators.target.TargetLocation";
 }
 
 .tasks {
-    -randori-mediator: "mediators.TasksMediator";
+	-randori-mediator: "mediators.TasksMediator";
 }
 
 .tasks-admin {
-    -randori-mediator: "mediators.admin.TasksMediator";
+	-randori-mediator: "mediators.admin.TasksMediator";
 }
 
 .createTaskForm {
-    -randori-behavior: "behaviors.CreateTaskForm";
-    -randori-fragment: "fragment/createTaskForm.html";
+	-randori-behavior: "behaviors.CreateTaskForm";
+	-randori-fragment: "fragment/createTaskForm.html";
 }
 
 .tasksgrid {
-    -randori-behavior: "behaviors.TasksGrid";
+	-randori-behavior: "behaviors.TasksGrid";
 }
 
 .gadgetslideshow {
-    -randori-behavior: "behaviors.GadgetSlideShow";
+	-randori-behavior: "behaviors.GadgetSlideShow";
 }
 
 .filmstrip {
-    -randori-behavior: "behaviors.Filmstrip";
+	-randori-behavior: "behaviors.Filmstrip";
 }
 
 .dateAreaChart {
-    -randori-behavior: "behaviors.charts.DateAreaChart";
+	-randori-behavior: "behaviors.charts.DateAreaChart";
 }
 
 .groupedBarChart {
-    -randori-behavior: "behaviors.charts.GroupedBarChart";
+	-randori-behavior: "behaviors.charts.GroupedBarChart";
 }
 
 .pieChart {
-    -randori-behavior: "behaviors.charts.PieChart";
+	-randori-behavior: "behaviors.charts.PieChart";
 }
 
 .simpleList {
-    -randori-behavior: "randori.behaviors.SimpleList";
+	-randori-behavior: "randori.behaviors.SimpleList";
 }
 
 .list {
-    -randori-behavior: "randori.behaviors.List";
+	-randori-behavior: "randori.behaviors.List";
 }
 
 .template {
-    -randori-behavior: "randori.behaviors.template.TemplateRenderer";
+	-randori-behavior: "randori.behaviors.template.TemplateRenderer";
 }
 
 .behavior-base {
-    -randori-behavior: "behaviors.BaseBehavior";
+	-randori-behavior: "behaviors.BaseBehavior";
 }
 
 .behavior-image {
-    -randori-behavior: "behaviors.ImageBehavior";
+	-randori-behavior: "behaviors.ImageBehavior";
 }

@@ -39,6 +39,31 @@ package behaviors.charts
 	public class DateAreaChart extends AbstractBehavior {
 		//----------------------------------------------------------------------------
 		//
+		// Variables
+		//
+		//----------------------------------------------------------------------------
+
+		[View]
+		public var areaChartSVG:JQuery;
+		private var svg:D3Selection;
+		private var yAxisText:D3Selection;
+
+		public var margin:Object;
+		private var width:Number = -1;
+		private var height:Number = -1;
+
+		private var x:D3Scale;
+		private var y:D3Scale;
+		private var xAxis:D3Axis;
+		private var yAxis:D3Axis;
+		private var line:D3Line;
+		private var area:D3Area;
+		private var parseDate:*;
+
+		private var DEFAULT_MARGIN:Object = {top: 20, right: 20, bottom: 50, left: 50};
+
+		//----------------------------------------------------------------------------
+		//
 		// Properties
 		//
 		//----------------------------------------------------------------------------
@@ -72,32 +97,6 @@ package behaviors.charts
 
 			applyDataToChart(_data);
 		}
-
-		//----------------------------------------------------------------------------
-		//
-		// Variables
-		//
-		//----------------------------------------------------------------------------
-
-		[View]
-		public var areaChartSVG:JQuery;
-		private var svg:D3Selection;
-
-		private var DEFAULT_MARGIN:Object = {top: 20, right: 20, bottom: 50, left: 50};
-
-		public var margin:Object;
-		private var width:Number = -1;
-		private var height:Number = -1;
-
-		private var x:D3Scale;
-		private var y:D3Scale;
-		private var xAxis:D3Axis;
-		private var yAxis:D3Axis;
-		private var line:D3Line;
-		private var area:D3Area;
-		private var parseDate:*;
-
-		private var yAxisText:D3Selection;
 
 		//----------------------------------------------------------------------------
 		//
@@ -243,7 +242,7 @@ package behaviors.charts
 
 			svg.append("g")
 					.attr("class", "x axis")
-					.attr("transform", "translate(0," + height + ")")
+					.attr("transform", "translate(0," + height + ")");
 		}
 
 		/**

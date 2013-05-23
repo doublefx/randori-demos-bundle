@@ -36,38 +36,6 @@ package behaviors.charts {
 	public class PieChart extends AbstractBehavior {
 		//----------------------------------------------------------------------------
 		//
-		// Properties
-		//
-		//----------------------------------------------------------------------------
-
-		//----------------------------------------
-		// data
-		//----------------------------------------
-
-		/**
-		 * @private
-		 */
-		private var _data:Array;
-
-		/**
-		 * the grid updates when data is written to this property
-		 */
-		public function get data() : Array {
-			return _data;
-		}
-
-		/**
-		 * @private
-		 */
-		public function set data(value:Array) : void {
-			if (_data == value)
-				return;
-			_data = value;
-			applyDataToChart(_data);
-		}
-
-		//----------------------------------------------------------------------------
-		//
 		// Variables
 		//
 		//----------------------------------------------------------------------------
@@ -100,6 +68,38 @@ package behaviors.charts {
 
 		//----------------------------------------------------------------------------
 		//
+		// Properties
+		//
+		//----------------------------------------------------------------------------
+
+		//----------------------------------------
+		// data
+		//----------------------------------------
+
+		/**
+		 * @private
+		 */
+		private var _data:Array;
+
+		/**
+		 * the grid updates when data is written to this property
+		 */
+		public function get data() : Array {
+			return _data;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set data(value:Array) : void {
+			if (_data == value)
+				return;
+			_data = value;
+			applyDataToChart(_data);
+		}
+
+		//----------------------------------------------------------------------------
+		//
 		// Methods
 		//
 		//----------------------------------------------------------------------------
@@ -112,7 +112,9 @@ package behaviors.charts {
 			}
 			var total:Number = 0;
 			data.forEach(function(d:*):void {
-				total += d.value;
+				try {
+					total += d.value;
+				} catch (e) { }
 			});
 			return innerLabel.text("Total: " + total);
 		}

@@ -36,6 +36,41 @@ package behaviors.charts
 	public class GroupedBarChart extends AbstractBehavior {
 		//----------------------------------------------------------------------------
 		//
+		// Variables
+		//
+		//----------------------------------------------------------------------------
+
+		[View]
+		public var groupedBarChartSVG:JQuery;
+		private var svg:D3Selection;
+
+		private var width:Number = -1;
+		private var height:Number = -1;
+		public var margin:Object;
+		public var colors:Array;
+
+		private var x0:D3Scale;
+		private var x1:D3Scale;
+		private var y:D3Scale;
+		private var xAxis:D3Axis;
+		private var yAxis:D3Axis;
+		private var colorScale:D3Scale;
+
+		private var xAxisDOM:D3Selection;
+		private var yAxisDOM:D3Selection;
+		private var yAxisTextDOM:D3Selection;
+		private var barsDOM:D3Selection;
+		private var legendDOM:D3Selection;
+
+		private var DEFAULT_MARGIN:Object = {top: 20, right: 20, bottom: 50, left: 50};
+		private var DEFAULT_COLORS:Array =
+				["#EEE", "#DDD", "#CCC", "#BBB",
+					"#AAA", "#999", "#888", "#777",
+					"#666", "#555", "#444", "#333",
+					"#222", "#111"];
+
+		//----------------------------------------------------------------------------
+		//
 		// Properties
 		//
 		//----------------------------------------------------------------------------
@@ -72,50 +107,20 @@ package behaviors.charts
 
 		//----------------------------------------------------------------------------
 		//
-		// Variables
-		//
-		//----------------------------------------------------------------------------
-
-		[View]
-		public var groupedBarChartSVG:JQuery;
-		private var svg:D3Selection;
-
-		private var DEFAULT_MARGIN:Object = {top: 20, right: 20, bottom: 50, left: 50};
-
-		public var margin:Object;
-		private var width:Number = -1;
-		private var height:Number = -1;
-
-		private var x0:D3Scale;
-		private var x1:D3Scale;
-		private var y:D3Scale;
-		private var xAxis:D3Axis;
-		private var yAxis:D3Axis;
-		private var bars:D3Selection;
-		private var colorScale:D3Scale;
-
-		private var legend:D3Selection;
-
-		private var yAxisText:D3Selection;
-
-		private var DEFAULT_COLORS:Array =
-				["#EEE", "#DDD", "#CCC", "#BBB",
-					"#AAA", "#999", "#888", "#777",
-					"#666", "#555", "#444", "#333",
-					"#222", "#111"];
-		public var colors:Array;
-
-		//----------------------------------------------------------------------------
-		//
 		// Methods
 		//
 		//----------------------------------------------------------------------------
 
-		private function setupLegend(valueNames:Array):void {
+		/**
+		 * create the legend to be used to show what the different bars represent
+		 *
+		 * @param valueNames the names of the data values
+		 */
+		private function buildLegend(valueNames:Array):D3Selection {
 			var squareSize:Number = 18;
 			var squareMargin:Number = 1;
 
-			legend = svg.selectAll(".legend")
+			var legend:D3Selection = svg.selectAll(".legend")
 					.data(valueNames.slice().reverse())
 					.enter().append("g")
 					.attr("class", "legend")
@@ -138,9 +143,15 @@ package behaviors.charts
 					.text(function (d:*):* {
 						return d;
 					});
+			return legend;
 		}
 
-		private function setupBarsDOM(data:Array):void {
+		/**
+		 * setup the Bars DOM objects
+		 *
+		 * @param data the data array
+		 */
+		private function buildBarsDOM(data:Array):D3Selection {
 			var scopedX0:* = x0;
 			svg.selectAll(".bar").remove();
 			var item:D3Selection = svg.selectAll(".bar")
@@ -155,44 +166,52 @@ package behaviors.charts
 			var scopedY:* = y;
 			var scopedColorScale:* = colorScale;
 			var scopedHeight:Number = height;
-			bars = item.selectAll("rect")
-					.data(function (d:*):Array {
+			var bars:D3Selection = item.selectAll("rect")
+					.data(function (d:Object):Array {
 						return d.values;
 					})
 					.enter().append("rect")
 					.attr("class", "barRect")
 					.attr("width", x1.rangeBand())
-					.attr("x", function (d:*):* {
+					.attr("x", function (d:*):Number {
 						return scopedX1(d.name);
 					})
-					.attr("y", function (d:*):* {
+					.attr("y", function (d:*):Number {
 						return scopedY(d.value);
 					})
-					.attr("height", function (d:*):* {
+					.attr("height", function (d:*):Number {
 						return scopedHeight - scopedY(d.value);
 					})
 					.style("fill", function (d:*):* {
 						return scopedColorScale(d.name);
 					});
+			return bars;
 		}
 
-		private function setupYAxisDOM():void {
-			yAxisText = svg.append("g")
+		/**
+		 * create the Y Axis DOM object
+		 */
+		private function buildYAxisDOM():D3Selection {
+			var yAxisDOM:D3Selection = svg.append("g")
 					.attr("class", "y axis")
-					.call(yAxis)
-					.append("text")
+					.call(yAxis);
+			yAxisTextDOM = yAxisDOM.append("text")
 					.attr("transform", "rotate(-90)")
 					.attr("y", 6)
 					.attr("dy", ".71em")
 					.style("text-anchor", "end");
+			return yAxisDOM;
 		}
 
-		private function setupXAxisDOM():void {
-			svg.append("g")
+		/**
+		 * create the XAxis DOM object
+		 */
+		private function buildXAxisDOM():D3Selection {
+			var xAxisDOM:D3Selection = svg.append("g")
 					.attr("class", "x axis")
 					.attr("transform", "translate(0," + height + ")")
-					.call(xAxis)
-					.selectAll("text")
+					.call(xAxis);
+			xAxisDOM.selectAll("text")
 					.attr("class", "x axis text")
 					.style("text-anchor", "end")
 					.attr("dx", "-.8em")
@@ -200,28 +219,49 @@ package behaviors.charts
 					.attr("transform", function (d:*):* {
 						return "rotate(-45)"
 					});
+			return xAxisDOM;
 		}
 
+		/**
+		 * setup the domains for the x0, x1, and y variables
+		 *
+		 * @param data the data array
+		 * @param valueNames the names of the values in the data array
+		 */
 		private function setupDomains(data:Array, valueNames:Array):void {
 			x0.domain2(data.map(function (d:*):String {
 				return d.name;
 			}));
 			x1.domain2(valueNames).rangeRoundBands1([0, x0.rangeBand()]);
-			y.domain2([0, d3Static.max(data, function (d:*):* {
-				return d3Static.max(d.values, function (d:*):* {
+			y.domain2([0, d3Static.max(data, function (d:*):Number {
+				return d3Static.max(d.values, function (d:*):Number {
 					return d.value;
 				});
 			})]);
 		}
 
+		/**
+		 * format the data into a format better conditioned for the behavior
+		 *
+		 * @param data the data array to be formatted
+		 * @param valueNames the names of the values in the data array
+		 */
 		private function formatData(data:Array, valueNames:Array):void {
 			data.forEach(function (d:*):void {
-				d.values = valueNames.map(function (name:String):* {
-					return {name: name, value: +d[name]};
-				});
+				try {
+					d.values = valueNames.map(function (name:String):Object {
+						return {name: name, value: +d[name]};
+					});
+				} catch (e) { }
 			});
 		}
 
+		/**
+		 * get the names of the values in the data array
+		 *
+		 * @param data the array of the data including the header line that contains the names of the values
+		 * @return an array of the names of the values
+		 */
 		private function getValueNames(data:Array):Array {
 			return d3Static.keys(data[0])
 					.filter(function (key:String):Boolean {
@@ -229,12 +269,22 @@ package behaviors.charts
 					});
 		}
 
+		/**
+		 * set the text that appears on the y Axis
+		 *
+		 * @param label the string to be displayed on the y axis
+		 */
 		public function setYAxisText(label:String):void {
-			if (yAxisText == null)
+			if (yAxisTextDOM == null)
 				return;
-			yAxisText.text(label);
+			yAxisTextDOM.text(label);
 		}
 
+		/**
+		 * create the color D3Scale object
+		 *
+		 * @return the color D3Scale object
+		 */
 		private function buildColorScale():D3Scale {
 			if (colors == null)
 				colors = DEFAULT_COLORS;
@@ -248,29 +298,30 @@ package behaviors.charts
 		 * @return the x-D3Axis object
 		 */
 		private function buildXAxis(x:D3Scale):D3Axis {
+			if (x == null)
+				throw new Error("Null Exception: Value 'x' must not be null");
 			return d3.svg.axis()
 					.scale(x)
 					.orient("bottom");
 		}
 
 		/**
-		 * build the x-D3Scale object
+		 * build the x0-D3Scale object
 		 *
 		 * @param width the width of the D3Scale object
-		 * @param data the data that will be displayed in the chart
-		 * @return the x-D3Scale object
+		 * @return the x0-D3Scale object
 		 */
 		private function buildX0Scale(width:Number):D3Scale {
+			if (width < 0)
+				throw new Error("Invalid Number Exception: Value 'width' must be positive");
 			return scale.ordinal()
 					.rangeRoundBands2([0, width], .1);
 		}
 
 		/**
-		 * build the x-D3Scale object
+		 * build the x1-D3Scale object
 		 *
-		 * @param width the width of the D3Scale object
-		 * @param data the data that will be displayed in the chart
-		 * @return the x-D3Scale object
+		 * @return the x1-D3Scale object
 		 */
 		private function buildX1Scale():D3Scale {
 			return scale.ordinal();
@@ -296,6 +347,8 @@ package behaviors.charts
 		 * @return the y-D3Scale object
 		 */
 		private function buildYScale(height:Number):D3Scale {
+			if (height < 0)
+				throw new Error("Invalid Number Exception: Value 'height' must be positive");
 			return scale.linear()
 					.range([height, 0]);
 		}
@@ -317,7 +370,7 @@ package behaviors.charts
 			if (margin == null)
 				margin = DEFAULT_MARGIN;
 
-			if (width == -1 || height == -1) {
+			if (width < 0 || height < 0) {
 				width = groupedBarChartSVG.width() - margin.left - margin.right;
 				height = groupedBarChartSVG.height() - margin.top - margin.bottom;
 			}
@@ -325,22 +378,23 @@ package behaviors.charts
 
 		/**
 		 * when we get data, give it to the grid
+		 *
+		 * @param data the data array to be shown in the chart
 		 */
 		private function applyDataToChart(data:Array):void {
 			// since we now have the chart behavior created, we can setup the chart internals
 			setupChart();
 
+			// now that the chart framework is setup, apply the data
 			var valueNames:Array = getValueNames(data);
 			formatData(data, valueNames);
 
 			setupDomains(data, valueNames);
 
-			setupXAxisDOM();
-			setupYAxisDOM();
-
-			setupBarsDOM(data);
-
-			setupLegend(valueNames);
+			xAxisDOM = buildXAxisDOM();
+			yAxisDOM = buildYAxisDOM();
+			barsDOM = buildBarsDOM(data);
+			legendDOM = buildLegend(valueNames);
 		}
 
 		/**
