@@ -77,9 +77,9 @@ package behaviors {
 		/**
 		 * @private
 		 */
-		public function set data(value:Array) : void
-		{
-			if (_data == value)
+		public function set data(value:Array) : void {
+			// caeck if we already have the data, or its empty/null
+			if (_data == value || value.length == 0 || value == null)
 				return;
 
 			_data = value;
@@ -93,15 +93,15 @@ package behaviors {
 			dataToCharts(_data);
 		}
 
-		public function dataToCharts(data:Array):void {
+		private function setUsesCompareChart(data:Array):void {
 			if (gadgetUsesCompareChart) {
 				var uses:Array = new Array();
 				data.forEach(function (gadget:Gadget):void {
 					uses.push({name: gadget.name,
-								"Lab Fails": gadget.failLabUses,
-								"Field Fails": gadget.failFieldUses,
-								"Lab Successes": gadget.succLabUses,
-								"Field Successes": gadget.succFieldUses})
+						"Lab Fails": gadget.failLabUses,
+						"Field Fails": gadget.failFieldUses,
+						"Lab Successes": gadget.succLabUses,
+						"Field Successes": gadget.succFieldUses})
 				});
 				gadgetUsesCompareChart.margin = {top: 20, right: 20, bottom: 160, left: 50};
 				gadgetUsesCompareChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
@@ -110,40 +110,76 @@ package behaviors {
 			}
 		}
 
+		private function setMainSlide(image:String):void {
+			if (mainSlide)
+				mainSlide.attr("src", image);
+		}
+
+		private function setName(name:String):void {
+			if (gadgetName)
+				gadgetName.html(name);
+		}
+
+		private function setStatus(status:String):void {
+			if (gadgetStatus)
+				gadgetStatus.html(status);
+		}
+
+		private function setDescription(description:String):void {
+			if (gadgetDescription)
+				gadgetDescription.html(description);
+		}
+
+		private function setCurrentProgressChart(gadget:Gadget):void {
+			if (gadgetCurrentProgress) {
+				var currentPercent:Number = gadget.progressPercents[gadget.progressPercents.length - 1].value;
+				gadgetCurrentProgress.colors = ["#4682B4", "#B0E0E6"];
+				gadgetCurrentProgress.innerRadius = 10;
+				gadgetCurrentProgress.data = [
+					{name: "Current Progress", value: currentPercent},
+					{name: "Incomplete Progress", value: 100 - currentPercent}
+				];
+				gadgetCurrentProgress.setInnerLabelText(currentPercent + "%");
+			}
+		}
+
+		private function setProgressChart(gadget:Gadget):void {
+			if (gadgetProgressChart) {
+				gadgetProgressChart.margin = {top: 20, right: 20, bottom: 70, left: 50};
+				gadgetProgressChart.data = gadget.progressPercents;
+				gadgetProgressChart.setYAxisText("Percent Complete");
+			}
+		}
+
+		private function setUsesChart(gadget:Gadget):void {
+			if (gadgetUsesChart) {
+				gadgetUsesChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
+				gadgetUsesChart.data = [
+					{name: "Lab Fails", value: gadget.failLabUses},
+					{name: "Field Fails", value: gadget.failFieldUses},
+					{name: "Lab Successes", value: gadget.succLabUses},
+					{name: "Field Successes", value: gadget.succFieldUses}
+				];
+			}
+		}
+
+		public function dataToCharts(data:Array):void {
+			setUsesCompareChart(data);
+		}
+
 		public function setActive(gadget:Gadget):void {
 			if (activeGadget == gadget)
 				return;
 			// set the active gadget
 			activeGadget = gadget;
 			// set the displays of the active gadget
-			if (mainSlide)
-				mainSlide.attr("src", gadget.image);
-			if (gadgetName)
-				gadgetName.html(gadget.name);
-			if (gadgetStatus)
-				gadgetStatus.html(gadget.status);
-			if (gadgetDescription)
-				gadgetDescription.html(gadget.description);
-			if (gadgetCurrentProgress) {
-				var currentPercent:Number = gadget.progressPercents[gadget.progressPercents.length - 1].value;
-				gadgetCurrentProgress.colors = ["#4682B4", "#B0E0E6"];
-				gadgetCurrentProgress.innerRadius = 10;
-				gadgetCurrentProgress.data = [{name:"Current Progress", value:currentPercent},
-												{name:"Incomplete Progress", value:100 - currentPercent}];
-				gadgetCurrentProgress.setInnerLabelText(currentPercent + "%");
-			}
-			if (gadgetProgressChart) {
-				gadgetProgressChart.margin = {top: 20, right: 20, bottom: 70, left: 50};
-				gadgetProgressChart.data = gadget.progressPercents;
-				gadgetProgressChart.setYAxisText("Percent Complete");
-			}
-			if (gadgetUsesChart) {
-				gadgetUsesChart.colors = ["#B8E3E8", "#9ECACF", "#588EBC", "#3F75A2"];
-				gadgetUsesChart.data = [{name:"Lab Fails", value:gadget.failLabUses},
-										{name:"Field Fails", value:gadget.failFieldUses},
-										{name:"Lab Successes", value:gadget.succLabUses},
-										{name:"Field Successes", value:gadget.succFieldUses}];
-			}
+			setMainSlide(gadget.image);
+			setName(gadget.name);
+			setStatus(gadget.status);
+			setDescription(gadget.description);
+			setCurrentProgressChart(gadget);
+			setProgressChart(gadget);
+			setUsesChart(gadget);
 		}
 
 		private function handleGadgetSelected( gadget:Gadget ):void {

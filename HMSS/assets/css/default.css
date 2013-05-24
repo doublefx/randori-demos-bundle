@@ -61,7 +61,7 @@ body
     z-index: 10;
     background: white !important;
     position: relative;
-    moz-box-shadow: inset 0 0 35px 5px #fafbfd;
+    -moz-box-shadow: inset 0 0 35px 5px #fafbfd;
     -webkit-box-shadow: inset 0 0 35px 5px #fafbfd;
     box-shadow: inset 0 0 35px 5px #fafbfd;
 }
@@ -82,7 +82,7 @@ body
     background-color: #FFF;
     min-height: 400px;
     padding: 12px;
-    moz-box-shadow: inset 0 0 35px 5px #fafbfd;
+    -moz-box-shadow: inset 0 0 35px 5px #fafbfd;
     -webkit-box-shadow: inset 0 0 35px 5px #fafbfd;
     box-shadow: inset 0 0 35px 5px #fafbfd;
     padding: 25px;

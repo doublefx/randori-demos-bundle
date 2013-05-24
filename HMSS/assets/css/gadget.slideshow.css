@@ -89,15 +89,18 @@ div {
 	float: left;
 }
 
-.gadgetCurrentProgress .innerLabel{
+/* Uses decendants, OPTIMIZE */
+.gadgetCurrentProgress .innerLabel {
 	font-weight: bold;
 	/*fill: gray;*/
 }
 
-.gadgetCurrentProgress .arcLabel{
+/* Uses decendants, OPTIMIZE */
+.gadgetCurrentProgress .arcLabel {
 	display: none;
 }
 
+/* Uses decendants, OPTIMIZE */
 .gadgetUsesCompare .x.axis.text,
 .gadgetUsesCompare .legend {
 	font-size: .75em;
@@ -107,11 +110,13 @@ div {
 	font-size: .7em;
 }
 
+/* Uses decendants, OPTIMIZE */
 .gadgetUses .innerLabel {
 	font-size: 1.2em;
 }
 
 /* D3 SVG STYLING */
+/* Uses decendants, OPTIMIZE */
 .axis path,
 .axis line {
 	fill: none;
@@ -119,10 +124,12 @@ div {
 	shape-rendering: crispEdges;
 }
 
+/* Uses decendants, OPTIMIZE */
 .x.axis path {
 	display: none;
 }
 
+/* Uses decendants, OPTIMIZE */
 .grid .tick {
 	stroke: lightgrey;
 	stroke-width: 1px;
@@ -155,10 +162,10 @@ div {
 	-ms-transform: scale(1, 1);
 }
 
-.arcPath:hover {
+/* Uses decendants, OPTIMIZE */
+.gadgetUses .arcPath:hover {
 	transform: scale(1.2, 1.2);
 	-webkit-transform: scale(1.2, 1.2);
-	-ms-transform: scale(1.2, 1.2);
 }
 
 .barRect:hover {
@@ -177,24 +184,29 @@ div {
 table {
 	border-collapse: collapse;
 }
+/* Uses decendants, OPTIMIZE */
 table td {
 	border: 2px solid darkgray;
 	margin: 0px;
 	padding: 24px;
 }
+/* Uses decendants, OPTIMIZE */
 table tr:first-child td {
 	border-top: 0;
 	padding-top: 0;
 }
+/* Uses decendants, OPTIMIZE */
 table tr:last-child td {
 	border-bottom: 0;
 	padding-bottom: 0;
 }
+/* Uses decendants, OPTIMIZE */
 table tr td:first-child,
 table tr th:first-child {
 	border-left: 0;
 	padding-left: 0;
 }
+/* Uses decendants, OPTIMIZE */
 table tr td:last-child,
 table tr th:last-child {
 	border-right: 0;
