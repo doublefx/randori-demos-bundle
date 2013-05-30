@@ -19,11 +19,11 @@
 
 
 package models {
-	import eventBus.HMSSBus;
+import eventBus.HMSSBus;
 
-	import models.user.User;
+import models.user.User;
 
-	public class AppModel
+public class AppModel
 	{
 
 		[Inject]

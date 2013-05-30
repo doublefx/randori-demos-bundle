@@ -13,23 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *
- * @author Michael Labriola <labriola@digitalprimates.net>
+ * Created with IntelliJ IDEA.
+ * Date: 4/23/13
+ * Time: 5:24 PM
+ * @author Steve Zimmers <szimmers@digitalprimates.net>
  */
-
-package services.parser {
-	import randori.service.parser.AbstractParser;
-
-	public class TargetDataParser extends AbstractParser {
-    public function parseResult(result:Object):Array {
-        //Here we are just going to parse the result into Json.
-        //We are adding some extra data just to show the concept that transforming here is totally allowed and legit
-        var json:Array = JSON.parse( result as String ) as Array;
-
-        return json;
-    }
-
-    public function TargetDataParser() {
-    }
-}
+package models.tasks
+{
+	[JavaScript(export="false", name="Object", mode="json")]
+	public class Task
+	{
+		public var taskName:String;
+		public var assignedId:String;
+		public var priority:String;
+	}
 }

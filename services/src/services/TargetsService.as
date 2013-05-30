@@ -17,30 +17,33 @@
  * @author Michael Labriola <labriola@digitalprimates.net>
  */
 package services {
-	import randori.async.Promise;
-	import randori.service.AbstractService;
-	import randori.webkit.xml.XMLHttpRequest;
+import randori.async.Promise;
+import randori.service.AbstractService;
+import randori.service.ServiceConfig;
+import randori.webkit.xml.XMLHttpRequest;
 
-	import services.parser.GenericJsonParser;
+import services.parser.GenericJsonParser;
 
-	public class LabService extends AbstractService {
+public class TargetsService extends AbstractService {
 		
-		private var gadgets:GenericJsonParser;
+		private var config:ServiceConfig;
+		private var targets:GenericJsonParser;
 		
 		private var path:String;
 		
 		public function get():Promise {
 			var promise:Promise = sendRequest("GET", path);
-			var parserPromise:Promise = promise.then( gadgets.parseResult );
+			var parserPromise:Promise = promise.then( targets.parseResult );
 			
 			return parserPromise;
 		}
 		
-		public function LabService(xmlHttpRequest:XMLHttpRequest, gadgets:GenericJsonParser ) {
+		public function TargetsService(xmlHttpRequest:XMLHttpRequest, config:ServiceConfig, targets:GenericJsonParser ) {
 			super(xmlHttpRequest);
 			
-			this.gadgets = gadgets;
-			this.path = "assets/data/gadgets.json";
+			this.config = config;
+			this.targets = targets;
+			this.path = "assets/data/targets.json";
 		}
 	}
 }

@@ -19,15 +19,15 @@
 
 package behaviors
 {
-	import Slick.Column;
-	import Slick.Grid;
-	import Slick.Options;
+import Slick.Column;
+import Slick.Grid;
+import Slick.Options;
 
-	import formatters.tasks.PriorityFormatter;
+import formatters.tasks.PriorityFormatter;
 
-	import randori.behaviors.AbstractBehavior;
+import randori.behaviors.AbstractBehavior;
 
-	/**
+/**
 	 * The grid for the tasklist
 	 */
 	public class TasksGrid extends AbstractBehavior

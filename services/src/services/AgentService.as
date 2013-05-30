@@ -18,13 +18,13 @@
  */
 
 package services {
-	import randori.async.Promise;
-	import randori.service.AbstractService;
-	import randori.webkit.xml.XMLHttpRequest;
+import randori.async.Promise;
+import randori.service.AbstractService;
+import randori.webkit.xml.XMLHttpRequest;
 
-	import services.parser.UserParser;
+import services.parser.UserParser;
 
-	/**
+/**
 	 * Created with IntelliJ IDEA.
 	 * User: bschmidtke
 	 * Date: 4/19/13

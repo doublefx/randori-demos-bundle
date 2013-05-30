@@ -20,9 +20,9 @@
  */
 package services.parser
 {
-	import randori.service.parser.AbstractParser;
+import randori.service.parser.AbstractParser;
 
-	/**
+/**
 	 * Parser for intel data. Takes CIA rss/rdf feed and turns it into json.
 	 */
 	public class IntelParser extends AbstractParser

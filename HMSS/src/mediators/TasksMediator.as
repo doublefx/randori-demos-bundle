@@ -19,13 +19,13 @@
 
 package mediators
 {
-	import behaviors.TasksGrid;
+import behaviors.TasksGrid;
 
-	import randori.behaviors.AbstractMediator;
+import randori.behaviors.AbstractMediator;
 
-	import services.TasksService;
+import services.TasksService;
 
-	/**
+/**
 	 * Mediator for the view showing the tasklist
 	 */
 	public class TasksMediator extends AbstractMediator

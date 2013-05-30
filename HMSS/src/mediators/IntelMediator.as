@@ -17,12 +17,12 @@
  * @author Michael Labriola <labriola@digitalprimates.net>
  */
 package mediators {
-	import randori.behaviors.AbstractMediator;
-	import randori.behaviors.List;
+import randori.behaviors.AbstractMediator;
+import randori.behaviors.List;
 
-	import services.IntelService;
+import services.IntelService;
 
-	public class IntelMediator extends AbstractMediator {
+public class IntelMediator extends AbstractMediator {
 		
 		[View]
 		public var intelList:List;

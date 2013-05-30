@@ -19,12 +19,12 @@
 
 package behaviors
 {
-	import models.user.User;
+import models.user.User;
 
-	import randori.behaviors.AbstractBehavior;
-	import randori.jquery.JQuery;
+import randori.behaviors.AbstractBehavior;
+import randori.jquery.JQuery;
 
-	public class SiteHeader extends AbstractBehavior
+public class SiteHeader extends AbstractBehavior
 	{
 
 		[View]

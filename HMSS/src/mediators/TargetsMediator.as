@@ -17,22 +17,22 @@
  * @author Michael Labriola <labriola@digitalprimates.net>
  */
 package mediators {
-	import eventBus.HMSSBus;
+import eventBus.HMSSBus;
 
-	import google.maps.LatLng;
-	import google.maps.Map;
-	import google.maps.MapOptions;
-	import google.maps.MapTypeId;
-	import google.maps.Marker;
+import google.maps.LatLng;
+import google.maps.Map;
+import google.maps.MapOptions;
+import google.maps.MapTypeId;
+import google.maps.Marker;
 
-	import randori.behaviors.AbstractMediator;
-	import randori.behaviors.List;
-	import randori.webkit.html.HTMLElement;
+import randori.behaviors.AbstractMediator;
+import randori.behaviors.List;
+import randori.webkit.html.HTMLElement;
 
-	import services.TargetsService;
-	import services.vo.Target;
+import services.TargetsService;
+import services.vo.Target;
 
-	public class TargetsMediator extends AbstractMediator
+public class TargetsMediator extends AbstractMediator
 	{
 
 		[View]

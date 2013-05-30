@@ -17,25 +17,16 @@
  * @author Ben Schmidtke <bschmidtke@digitalprimates.net>
  */
 
-
 package services.parser {
-	import models.user.User;
 
-	import randori.service.parser.AbstractParser;
+[JavaScript(export="false")]
+public class JSON {
 
-	public class UserParser extends AbstractParser {
+    public static function parse( value:String ):Object {
+        return null;
+    }
 
-		public function parseResult(result:Object):User {
-			//Here we are just going to parse the result into Json.
-			//We are adding some extra data just to show the concept that transforming here is totally allowed and legit
-			var json:Object = JSON.parse( result as String );
-
-			return json as User;
-		}
-
-		public function UserParser()
-		{
-			super();
-		}
-	}
+    public function JSON() {
+    }
+}
 }

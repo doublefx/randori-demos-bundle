@@ -17,13 +17,13 @@
  * @author Michael Labriola <labriola@digitalprimates.net>
  */
 package mediators {
-	import behaviors.GadgetSlideShow;
+import behaviors.GadgetSlideShow;
 
-	import randori.behaviors.AbstractMediator;
+import randori.behaviors.AbstractMediator;
 
-	import services.LabService;
+import services.LabService;
 
-	public class LabsMediator extends AbstractMediator {
+public class LabsMediator extends AbstractMediator {
 
 		[View]
 		public var gadgets:GadgetSlideShow;

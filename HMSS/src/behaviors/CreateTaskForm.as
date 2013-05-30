@@ -20,15 +20,15 @@
  */
 package behaviors
 {
-	import models.tasks.Task;
+import models.tasks.Task;
 
-	import randori.behaviors.AbstractBehavior;
-	import randori.jquery.Event;
-	import randori.jquery.JQuery;
-	import randori.jquery.JQueryStatic;
-	import randori.signal.SimpleSignal;
+import randori.behaviors.AbstractBehavior;
+import randori.jquery.Event;
+import randori.jquery.JQuery;
+import randori.jquery.JQueryStatic;
+import randori.signal.SimpleSignal;
 
-	/**
+/**
 	 * form for adding a task to the tasks grid
 	 */
 	public class CreateTaskForm extends AbstractBehavior

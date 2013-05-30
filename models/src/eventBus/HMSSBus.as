@@ -18,9 +18,9 @@
  */
 
 package eventBus {
-	import randori.signal.SimpleSignal;
+import randori.signal.SimpleSignal;
 
-	public class HMSSBus {
+public class HMSSBus {
 
 		[Inject]
 		public var targetSelected:SimpleSignal;

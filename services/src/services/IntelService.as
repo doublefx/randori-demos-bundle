@@ -20,13 +20,13 @@
  */
 package services
 {
-	import randori.async.Promise;
-	import randori.service.AbstractService;
-	import randori.webkit.xml.XMLHttpRequest;
+import randori.async.Promise;
+import randori.service.AbstractService;
+import randori.webkit.xml.XMLHttpRequest;
 
-	import services.parser.IntelParser;
+import services.parser.IntelParser;
 
-	/**
+/**
 	 * Service for getting RSS feed from intel sources
 	 */
 	public class IntelService extends AbstractService

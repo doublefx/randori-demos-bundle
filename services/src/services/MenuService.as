@@ -1,11 +1,11 @@
 package services {
-	import randori.async.Promise;
-	import randori.service.AbstractService;
-	import randori.webkit.xml.XMLHttpRequest;
+import randori.async.Promise;
+import randori.service.AbstractService;
+import randori.webkit.xml.XMLHttpRequest;
 
-	import services.parser.GenericJsonParser;
+import services.parser.GenericJsonParser;
 
-	/***
+/***
 	 * Copyright 2013 LTN Consulting, Inc. /dba Digital Primates®
 	 *
 	 * Licensed under the Apache License, Version 2.0 (the "License");

@@ -1,14 +1,14 @@
 package behaviors {
-	import behaviors.charts.DateAreaChart;
-	import behaviors.charts.GroupedBarChart;
-	import behaviors.charts.PieChart;
+import behaviors.charts.DateAreaChart;
+import behaviors.charts.GroupedBarChart;
+import behaviors.charts.PieChart;
 
-	import randori.behaviors.AbstractBehavior;
-	import randori.jquery.JQuery;
+import randori.behaviors.AbstractBehavior;
+import randori.jquery.JQuery;
 
-	import services.vo.Gadget;
+import services.vo.Gadget;
 
-	/***
+/***
 	 * Copyright 2013 LTN Consulting, Inc. /dba Digital Primates®
 	 *
 	 * Licensed under the Apache License, Version 2.0 (the "License");

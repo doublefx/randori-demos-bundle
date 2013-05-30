@@ -18,15 +18,18 @@
  */
 package services.vo {
 	[JavaScript(export="false",name="Object",mode="json")]
-	public class Target {
+	public class Gadget {
 		public var name:String;
 		public var image:String;
-		public var lastKnownLocation:String;
 		public var status:String;
-        public var latitude:Number;
-        public var longitude:Number;
+		public var description:String;
+		public var failLabUses:Number;
+		public var failFieldUses:Number;
+		public var succLabUses:Number;
+		public var succFieldUses:Number;
+		public var progressPercents:Array;
 
-		public function Target() {
+		public function Gadget() {
 		}
 	}
 }

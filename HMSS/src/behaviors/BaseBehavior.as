@@ -1,7 +1,7 @@
 package behaviors {
-	import randori.behaviors.AbstractBehavior;
+import randori.behaviors.AbstractBehavior;
 
-	/***
+/***
 	 * Copyright 2013 LTN Consulting, Inc. /dba Digital Primates®
 	 *
 	 * Licensed under the Apache License, Version 2.0 (the "License");
