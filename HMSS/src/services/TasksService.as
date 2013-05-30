@@ -25,8 +25,9 @@ package services
 	import randori.webkit.xml.XMLHttpRequest;
 
 	import services.parser.GenericJsonParser;
+import services.parser.JSON;
 
-	/**
+/**
 	 * Service for getting tasks
 	 */
 	public class TasksService extends AbstractService

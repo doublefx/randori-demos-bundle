@@ -17,7 +17,7 @@
  * @author Ben Schmidtke <bschmidtke@digitalprimates.net>
  */
 
-package {
+package services.parser {
 
 [JavaScript(export="false")]
 public class JSON {
