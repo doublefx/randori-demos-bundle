@@ -18,13 +18,13 @@
 
 package services
 {
-	import models.tasks.Task;
+import models.tasks.Task;
 
-	import randori.async.Promise;
-	import randori.service.AbstractService;
-	import randori.webkit.xml.XMLHttpRequest;
+import randori.async.Promise;
+import randori.service.AbstractService;
+import randori.webkit.xml.XMLHttpRequest;
 
-	import services.parser.GenericJsonParser;
+import services.parser.GenericJsonParser;
 import services.parser.JSON;
 
 /**
